@@ -19,6 +19,7 @@ import org.web3j.protocol.http.HttpService;
 import org.web3j.tuples.generated.Tuple3;
 import org.web3j.tuples.generated.Tuple4;
 import org.web3j.tuples.generated.Tuple5;
+import org.web3j.tuples.generated.Tuple6;
 import org.web3j.tx.ClientTransactionManager;
 import org.web3j.tx.Contract;
 import org.web3j.tx.TransactionManager;
@@ -176,7 +177,7 @@ public class Web3jManager {
     }
 
     // 商家部署商品合约
-    public static void deploy(final String _goodsOwner, final String _pwd,
+    public static void deploy(final String _goodsOwner, final String _pwd, final String _name,
                               final int _goodsVal, final int _ratio, final int _commission,
                               final ReqDepolyListener listener){
         new Thread(new Runnable() {
@@ -191,7 +192,7 @@ public class Web3jManager {
                         BigDecimal amount = new BigDecimal(_goodsVal);
                         BigInteger value = Convert.toWei(amount, Convert.Unit.ETHER).toBigInteger();
                         CopyRight contract = CopyRight.deploy(web3j, transactionManager,
-                                Contract.GAS_PRICE, Contract.GAS_LIMIT,
+                                Contract.GAS_PRICE, Contract.GAS_LIMIT, _name,
                                 value, BigInteger.valueOf(_ratio), BigInteger.valueOf(_commission)).send();
                         listener.onSuccess(_goodsOwner, contract.getContractAddress());
                     }
@@ -356,7 +357,7 @@ public class Web3jManager {
         }).start();
     }
 
-    // 根据商品合约信息
+    // 获取商品info
     public static void getGoodsInfo(final String _goodAddr, final String _addr, final ReqGetGoodsInfoListener listener){
         new Thread(new Runnable() {
             @Override
@@ -365,17 +366,38 @@ public class Web3jManager {
                     TransactionManager transactionManager = new ClientTransactionManager(web3j, _addr);
                     CopyRight contract = CopyRight.load(_goodAddr, web3j, transactionManager,
                             Contract.GAS_PRICE, Contract.GAS_LIMIT);
-                    BigInteger val1 = contract.getGoodsValue().send();
-                    BigInteger val2 = contract.getCommissionRatio().send();
-                    BigInteger val3 = contract.getShineRatio().send();
-
-                    listener.onSuccess(_goodAddr, val1.intValue(), val2.intValue(), val3.intValue());
+                    Tuple6<String, BigInteger, BigInteger, BigInteger, BigInteger, BigInteger> res =
+                            contract.getGoodsInfo().send();
+                    listener.onSuccess(_goodAddr, res.getValue1(), res.getValue2().intValue(),
+                            res.getValue3().intValue(), res.getValue4().intValue(),
+                            res.getValue5().intValue(), res.getValue6().intValue());
                 } catch (Exception e) {
                     listener.onError(e);
                 }
             }
         }).start();
     }
+
+    // 根据商品合约信息
+//    public static void getGoodsInfo(final String _goodAddr, final String _addr, final ReqGetGoodsInfoListener listener){
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    TransactionManager transactionManager = new ClientTransactionManager(web3j, _addr);
+//                    CopyRight contract = CopyRight.load(_goodAddr, web3j, transactionManager,
+//                            Contract.GAS_PRICE, Contract.GAS_LIMIT);
+//                    BigInteger val1 = contract.getGoodsValue().send();
+//                    BigInteger val2 = contract.getCommissionRatio().send();
+//                    BigInteger val3 = contract.getShineRatio().send();
+//
+//                    listener.onSuccess(_goodAddr, val1.intValue(), val2.intValue(), val3.intValue());
+//                } catch (Exception e) {
+//                    listener.onError(e);
+//                }
+//            }
+//        }).start();
+//    }
 
     public interface Web3jReqListener{
         void onError(Exception _e);
@@ -432,7 +454,8 @@ public class Web3jManager {
 
     // 获取商品信息
     public interface ReqGetGoodsInfoListener extends Web3jReqListener{
-        void onSuccess(String _addr, int _price, int _commRatio, int _shineRatio);
+        void onSuccess(String _addr, String _name, int _price,
+                       int _commRatio, int _shineRatio, int _sumAgenter, int _allweight);
     }
 
 

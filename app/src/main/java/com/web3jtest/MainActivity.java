@@ -279,6 +279,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+    Web3jManager.ReqGetBalanceListener getBalanceListener = new Web3jManager.ReqGetBalanceListener() {
+
+        @Override
+        public void onSuccess(String _addr, String _balance) {
+            MyLog(_addr + ":" + _balance);
+        }
+
+        @Override
+        public void onError(Exception _e) {
+            MyLog(_e.toString());
+        }
+    };
+
+    Web3jManager.ReqSendTransferListener sendTransferListener = new Web3jManager.ReqSendTransferListener() {
+        @Override
+        public void onSuccess(String _from, String _to, int _val, String _result) {
+            MyLog("from:" + _from + " to:" + _to + " val:" + _val + " res:" + _result);
+        }
+
+        @Override
+        public void onError(Exception _e) {
+            MyLog(_e.toString());
+        }
+    };
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -287,7 +312,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Web3jManager.getVersion(new Web3jManager.ReqVersionListener() {
                     @Override
                     public void onSuccess(String _version) {
+                        MyLog(_version);
+                    }
 
+                    @Override
+                    public void onError(Exception _e) {
+                        MyLog(_e.toString());
+                    }
+                });
+                break;
+            }
+            case R.id.balance:
+            {
+                Web3jManager.getBalance(bank, getBalanceListener);
+                Web3jManager.getBalance(user_account[0], getBalanceListener);
+                Web3jManager.getBalance(user_account[1], getBalanceListener);
+                Web3jManager.getBalance(user_account[2], getBalanceListener);
+                Web3jManager.getBalance(user_account[3], getBalanceListener);
+
+                break;
+            }
+            case R.id.deploy:
+            {
+                Web3jManager.deploy(user_account[0], passwrod, "黑鲨手机", 10,
+                        20, 20, new Web3jManager.ReqDepolyListener(){
+
+                    @Override
+                    public void onSuccess(String _goodsOwner, String _contractAddr) {
+                        MyLog(_goodsOwner + _contractAddr);
                     }
 
                     @Override
@@ -297,21 +349,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 });
                 break;
             }
-            case R.id.balance:
-            {
-//                Web3jManager.getBalance(bank);
-//                Web3jManager.getBalance(user_account[0]);
-//                Web3jManager.getBalance(user_account[1]);
-//                Web3jManager.getBalance(user_account[2]);
-//                Web3jManager.getBalance(user_account[3]);
-
-                break;
-            }
-            case R.id.deploy:
-            {
-//                Web3jManager.deploy(user_account[0], passwrod, 10, 20, 20);
-                break;
-            }
             case R.id.signup:
             {
 //                Web3jManager.createAgent(ownerToGoods.get(user_account[0]), user_account[1], passwrod, 10);
@@ -319,10 +356,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             case R.id.transfer:
             {
-//                Web3jManager.sendTransaction(bank, passwrod, user_account[0], 100);
-//                Web3jManager.sendTransaction(bank, passwrod, user_account[1], 100);
-//                Web3jManager.sendTransaction(bank, passwrod, user_account[2], 100);
-//                Web3jManager.sendTransaction(bank, passwrod, user_account[3], 100);
+                Web3jManager.sendTransaction(bank, passwrod, user_account[0], 100, sendTransferListener);
+                Web3jManager.sendTransaction(bank, passwrod, user_account[1], 100, sendTransferListener);
+                Web3jManager.sendTransaction(bank, passwrod, user_account[2], 100, sendTransferListener);
+                Web3jManager.sendTransaction(bank, passwrod, user_account[3], 100, sendTransferListener);
 
                 break;
             }
