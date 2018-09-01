@@ -384,6 +384,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.agentinfo:
             {
 //                Web3jManager.getAgentInfo(ownerToGoods.get(user_account[0]) ,user_account[0], 0);
+                Intent intent = new Intent(this, MySubscriptionActivity.class);
+                startActivity(intent);
                 break;
             }
         }

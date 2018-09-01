@@ -14,9 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
-        </activity>
-        <activity android:name=".shopping.ProductDetailActivity"/>
-        <activity android:name=".shopping.ProductListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,6 +22,10 @@
         </activity>
 
         <activity android:name=".SubscriptionActivity"/>
+
+        <activity
+            android:name=".MySubscriptionActivity"
+            android:launchMode="singleTask" />
     </application>
 
 </manifest>
