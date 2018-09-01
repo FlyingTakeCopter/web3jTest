@@ -1,6 +1,7 @@
 package com.web3jtest;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
@@ -40,6 +41,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+
+import rx.Subscription;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "web3j-log";
