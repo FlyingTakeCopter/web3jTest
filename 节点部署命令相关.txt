@@ -1,0 +1,10 @@
+geth下载，安装
+http://3.cn/mDfpHod
+
+// 创世区块初始化
+geth --datadir . init .\genesis.json
+// 启动geth节点
+geth --datadir . --networkid "4224" --rpc --rpcport "8545" --port "30303" --rpccorsdomain="*" -rpcapi "eth,web3,personal,net" console 2> log.txt
+ 
+// 智能合约.json转.java
+d:\web3j\web3j-3.3.1\bin>web3j truffle generate C:\truffle\tokentest\build\contracts\Goods.json -o . -p com.web3jtest.contract
