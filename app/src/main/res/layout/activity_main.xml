@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.web3jtest.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/testversion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="版本"/>
+
+        <Button
+            android:id="@+id/transfer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="转账"/>
+
+        <Button
+            android:id="@+id/balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="余额"/>
+
+        <Button
+            android:id="@+id/agentinfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="代理信息"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/deploy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="商家生成商品合约"/>
+
+    <Button
+        android:id="@+id/signup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="消费者认购商品代理权"/>
+
+    <Button
+        android:id="@+id/sell"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="消费者购买商品"/>
+
+    <Button
+        android:id="@+id/sellbyagent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="消费者通过二级代理购买商品"/>
+
+
+
+    <Button
+        android:id="@+id/price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="商品价格"
+        android:visibility="gone"/>
+
+
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textColor="@color/colorWhite"
+        android:background="@color/colorBlack"
+        android:scrollbars="vertical"/>
+</LinearLayout>
