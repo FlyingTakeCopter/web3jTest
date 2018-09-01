@@ -8,3 +8,8 @@ geth --datadir . --networkid "4224" --rpc --rpcport "8545" --port "30303" --rpcc
  
 // 智能合约.json转.java
 d:\web3j\web3j-3.3.1\bin>web3j truffle generate C:\truffle\tokentest\build\contracts\Goods.json -o . -p com.web3jtest.contract
+
+geth命令
+eth.accounts   查询账户
+miner.start()开始挖矿
+miner.stop()结束挖矿
