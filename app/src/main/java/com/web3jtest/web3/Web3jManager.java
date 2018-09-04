@@ -1,5 +1,7 @@
 package com.web3jtest.web3;
 
+import android.content.Context;
+
 import com.web3jtest.contract.CopyRight;
 
 import org.web3j.protocol.Web3j;
@@ -16,7 +18,6 @@ import org.web3j.protocol.core.methods.response.EthSendTransaction;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.protocol.core.methods.response.Web3ClientVersion;
 import org.web3j.protocol.http.HttpService;
-import org.web3j.tuples.generated.Tuple3;
 import org.web3j.tuples.generated.Tuple4;
 import org.web3j.tuples.generated.Tuple5;
 import org.web3j.tuples.generated.Tuple6;
@@ -28,7 +29,10 @@ import org.web3j.utils.Convert;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Properties;
 import java.util.concurrent.ExecutionException;
+
+import static org.web3j.protocol.http.HttpService.DEFAULT_URL;
 
 /**
  * Created by liuqikang on 2018/8/28.
@@ -41,9 +45,19 @@ public class Web3jManager {
     private static BigDecimal defaultGasPrice = BigDecimal.valueOf(5);
     private static BigInteger unlockDuration = BigInteger.valueOf(60L);
 
-    public static void init(){
-        web3j = Web3jFactory.build(new HttpService());
-        admin = AdminFactory.build(new HttpService());
+    public static void init(Context context){
+        Properties properties = new Properties();
+        String url = DEFAULT_URL;
+        try {
+            properties.load(context.getAssets().open("config.properties"));
+            url = properties.getProperty("url");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            properties.clear();
+        }
+        web3j = Web3jFactory.build(new HttpService(url));
+        admin = AdminFactory.build(new HttpService(url));
     }
 
     // 测试函数

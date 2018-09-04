@@ -2,17 +2,16 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <ImageView
-        android:id="@+id/detail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/detail"/>
+    android:layout_height="match_parent"
+    android:background="@drawable/detail">
 
     <Button
         android:id="@+id/buy"
-        android:layout_width="157dp"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
         android:layout_gravity="bottom|right"
-        android:background="@android:color/transparent"/>
+        android:background="@android:color/transparent"
+        android:text="立即购买"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp"/>
 </FrameLayout>

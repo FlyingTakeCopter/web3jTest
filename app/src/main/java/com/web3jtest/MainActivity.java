@@ -1,48 +1,28 @@
 package com.web3jtest;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Environment;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.web3jtest.web3.Web3jManager;
 
-import org.web3j.crypto.CipherException;
-import org.web3j.crypto.Credentials;
-import org.web3j.crypto.ECKeyPair;
-import org.web3j.crypto.Keys;
-import org.web3j.crypto.WalletUtils;
-import org.web3j.protocol.Web3j;
-//import org.web3j.protocol.Web3jFactory;
-import org.web3j.protocol.Web3jFactory;
-import org.web3j.protocol.core.RemoteCall;
-import org.web3j.protocol.core.Request;
-import org.web3j.protocol.core.methods.response.EthAccounts;
-import org.web3j.protocol.core.methods.response.TransactionReceipt;
-import org.web3j.protocol.core.methods.response.Web3ClientVersion;
-import org.web3j.protocol.http.HttpService;
-import org.web3j.tx.Contract;
-
-import java.io.File;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.math.BigInteger;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
-import rx.Subscription;
+//import org.web3j.protocol.Web3jFactory;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "web3j-log";
@@ -98,8 +78,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     void initData(){
+        initAccounts();
         ownerToGoods = new HashMap<>();
         ownerToAgent = new HashMap<>();
+    }
+
+    private void initAccounts() {
+        try {
+            List<String> accounts = new ArrayList<>();
+            InputStream is = getResources().getAssets().open("account.config");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+            String s;
+            while ((s = reader.readLine()) != null) {
+                accounts.add(s);
+            }
+            bank = accounts.get(0);
+            Log.i(TAG, "initAccounts: " + bank);
+            user_account = accounts.subList(1, accounts.size()).toArray(user_account);
+            Log.i(TAG, "initAccounts: " + Arrays.toString(user_account));
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             );
         }
 
-        Web3jManager.init();
+        Web3jManager.init(this);
 
 
 
@@ -328,10 +328,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.balance:
             {
                 Web3jManager.getBalance(bank, getBalanceListener);
-                Web3jManager.getBalance(user_account[0], getBalanceListener);
-                Web3jManager.getBalance(user_account[1], getBalanceListener);
-                Web3jManager.getBalance(user_account[2], getBalanceListener);
-                Web3jManager.getBalance(user_account[3], getBalanceListener);
+                for (String s : user_account) {
+                    Web3jManager.getBalance(s, getBalanceListener);
+                }
+//                Web3jManager.getBalance(user_account[0], getBalanceListener);
+//                Web3jManager.getBalance(user_account[1], getBalanceListener);
+//                Web3jManager.getBalance(user_account[2], getBalanceListener);
+//                Web3jManager.getBalance(user_account[3], getBalanceListener);
 
                 break;
             }
@@ -359,11 +362,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             case R.id.transfer:
             {
-                Web3jManager.sendTransaction(bank, passwrod, user_account[0], 100, sendTransferListener);
-                Web3jManager.sendTransaction(bank, passwrod, user_account[1], 100, sendTransferListener);
-                Web3jManager.sendTransaction(bank, passwrod, user_account[2], 100, sendTransferListener);
-                Web3jManager.sendTransaction(bank, passwrod, user_account[3], 100, sendTransferListener);
-
+//                Web3jManager.sendTransaction(bank, passwrod, user_account[0], 100, sendTransferListener);
+//                Web3jManager.sendTransaction(bank, passwrod, user_account[1], 100, sendTransferListener);
+//                Web3jManager.sendTransaction(bank, passwrod, user_account[2], 100, sendTransferListener);
+//                Web3jManager.sendTransaction(bank, passwrod, user_account[3], 100, sendTransferListener);
+                for (String s : user_account) {
+                    Web3jManager.sendTransaction(bank, passwrod, s, 100, sendTransferListener);
+                }
                 break;
             }
             case R.id.sell:
