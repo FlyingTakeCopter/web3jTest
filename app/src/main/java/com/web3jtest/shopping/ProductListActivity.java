@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.web3jtest.R;
 import com.web3jtest.base.BaseActivity;
@@ -19,8 +18,8 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_list);
-        ImageView image = findViewById(R.id.background);
-        image.setOnClickListener(this);
+        View view = findViewById(R.id.background);
+        view.setOnClickListener(this);
     }
 
     @Override
