@@ -4,54 +4,69 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/top_rl"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_alignParentLeft="true"
-        android:paddingLeft="20dp">
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/goods_name_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:text="商品名称"
-            />
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:text="黑鲨游戏手机 8GB+128GB 极夜黑 液冷更快 全网通4G"
+            android:textColor="@color/colorBlack"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colueGray" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/item_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/top_rl"
+        android:orientation="vertical"
+        android:paddingLeft="10dp">
+
 
         <TextView
             android:id="@+id/goods_address_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/TextViewStyle"
             android:text="商品地址" />
 
         <TextView
             android:id="@+id/goods_price_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/TextViewStyle"
             android:text="商品价格" />
 
         <TextView
             android:id="@+id/goods_coefficient_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/TextViewStyle"
             android:text="阳光普照系数" />
 
         <TextView
             android:id="@+id/goods_commission_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/TextViewStyle"
             android:text="代理佣金" />
 
         <TextView
             android:id="@+id/goods_subscribe_people_num_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/TextViewStyle"
             android:text="当前认购人数量" />
 
         <TextView
             android:id="@+id/goods_subscribe_price_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/TextViewStyle"
+            android:layout_marginBottom="10dp"
             android:text="当前认购总金额" />
 
     </LinearLayout>
@@ -59,55 +74,93 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_alignParentRight="true"
+        android:layout_below="@+id/top_rl"
         android:gravity="right"
-        android:paddingRight="20dp">
+        android:orientation="vertical"
+        android:paddingRight="10dp">
 
-        <TextView
-            android:id="@+id/goods_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:text="黑鲨手机"/>
 
         <TextView
             android:id="@+id/goods_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxLength="10"
-            android:ellipsize="end"
+            style="@style/TextViewStyle"
+            android:layout_width="100dp"
+            android:ellipsize="middle"
+            android:gravity="right"
+            android:singleLine="true"
             android:text="0x855ce19c4714c980a35c985704947ecd1e9992a0" />
 
         <TextView
             android:id="@+id/goods_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/TextViewStyle"
             android:text="￥1000" />
 
         <TextView
             android:id="@+id/goods_coefficient"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/TextViewStyle"
             android:text="20%" />
 
         <TextView
             android:id="@+id/goods_commission"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/TextViewStyle"
             android:text="￥1000" />
 
         <TextView
             android:id="@+id/goods_subscribe_people_num"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/TextViewStyle"
             android:text="1000(人)" />
 
         <TextView
             android:id="@+id/goods_subscribe_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/TextViewStyle"
+            android:layout_marginBottom="10dp"
             android:text="￥1000" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_ll"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colueGray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="可退出本金"
+                android:textColor="@color/textGray"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1000"
+                android:textColor="@color/colorBlue" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="元"
+                android:textColor="@color/textGray" />
+
+        </LinearLayout>
+
 
     </LinearLayout>
 

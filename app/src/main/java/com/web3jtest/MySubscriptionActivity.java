@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -27,26 +28,35 @@ public class MySubscriptionActivity extends AppCompatActivity implements View.On
     private GoodsAdapter mGoodsAdapter;
     private List<GoodsBean> mGoodsBeanList = new ArrayList<>();
     private GoodsBean goodsBean;
+    private ImageView mCancelBtn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_subscription);
+        setContentView(R.layout.activity_subscription_list);
         initView();
     }
 
     private void initView() {
+        mCancelBtn = findViewById(R.id.cancel_btn);
         mGoodsListView = findViewById(R.id.goods_list);
-        for (int i=0; i<5; i++) {
+        for (int i = 0; i < 5; i++) {
             mGoodsBeanList.add(goodsBean);
         }
         mGoodsAdapter = new GoodsAdapter(this, mGoodsBeanList);
         mGoodsListView.setAdapter(mGoodsAdapter);
+        mCancelBtn.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()) {
+            case R.id.cancel_btn:
+                finish();
+                break;
+            default:
+                break;
+        }
     }
 
     private class GoodsAdapter extends BaseAdapter {
@@ -87,13 +97,13 @@ public class MySubscriptionActivity extends AppCompatActivity implements View.On
                 convertView = LayoutInflater.from(mContext).inflate(
                         R.layout.item_goods, parent, false);
                 viewHolder = new ViewHolder();
-                viewHolder.mGoodsName = (TextView) convertView.findViewById(R.id.goods_name);
-                viewHolder.mGoodsAddress = (TextView) convertView.findViewById(R.id.goods_address);
-                viewHolder.mGoodsPrice = (TextView) convertView.findViewById(R.id.goods_price);
-                viewHolder.mGoodsCoefficient = (TextView) convertView.findViewById(R.id.goods_coefficient);
-                viewHolder.mGoodsCommission = (TextView) convertView.findViewById(R.id.goods_commission);
-                viewHolder.mGoodsSubscribePeopleNum = (TextView) convertView.findViewById(R.id.goods_subscribe_people_num);
-                viewHolder.mGoodsSubscribePrice = (TextView) convertView.findViewById(R.id.goods_subscribe_price);
+//                viewHolder.mGoodsName = (TextView) convertView.findViewById(R.id.goods_name);
+//                viewHolder.mGoodsAddress = (TextView) convertView.findViewById(R.id.goods_address);
+//                viewHolder.mGoodsPrice = (TextView) convertView.findViewById(R.id.goods_price);
+//                viewHolder.mGoodsCoefficient = (TextView) convertView.findViewById(R.id.goods_coefficient);
+//                viewHolder.mGoodsCommission = (TextView) convertView.findViewById(R.id.goods_commission);
+//                viewHolder.mGoodsSubscribePeopleNum = (TextView) convertView.findViewById(R.id.goods_subscribe_people_num);
+//                viewHolder.mGoodsSubscribePrice = (TextView) convertView.findViewById(R.id.goods_subscribe_price);
 
                 convertView.setTag(viewHolder);
             } else {
