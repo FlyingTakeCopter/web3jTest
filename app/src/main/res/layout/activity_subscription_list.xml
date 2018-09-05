@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:gravity="center"
-                android:text="已认购金额\n￥10000"
+                android:text="我的认购总金额\n￥10000"
                 android:textColor="@color/colorWhite" />
 
             <View
@@ -77,7 +77,7 @@
                 android:layout_height="37dp"
                 android:layout_centerInParent="true"
                 android:gravity="center"
-                android:text="阳光普照百分比\n￥10000"
+                android:text="我的认购分红\n￥10000"
                 android:textColor="@color/colorWhite" />
 
             <View
@@ -100,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:gravity="center"
-                android:text="提成百分比\n￥10000"
+                android:text="我的佣金总额\n￥10000"
                 android:textColor="@color/colorWhite" />
 
 
