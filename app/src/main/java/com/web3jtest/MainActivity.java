@@ -1,6 +1,7 @@
 package com.web3jtest;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -341,7 +342,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.deploy:
             {
                 Web3jManager.deploy(user_account[0], passwrod, "黑鲨手机", 10,
-                        20, 20, new Web3jManager.ReqDepolyListener(){
+                        20, 20, 10, new Web3jManager.ReqDepolyListener(){
 
                     @Override
                     public void onSuccess(String _goodsOwner, String _contractAddr) {
