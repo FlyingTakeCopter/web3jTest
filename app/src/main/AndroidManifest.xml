@@ -47,6 +47,9 @@
             <!--</intent-filter>-->
         </activity>
         <activity android:name=".shopping.ProductDetailActivity"/>
+
+        <activity android:name=".UserCenterActivity"
+            android:launchMode="singleTask"/>
     </application>
 
 </manifest>

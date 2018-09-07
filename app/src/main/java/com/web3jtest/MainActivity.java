@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             );
         }
 
-        Web3jManager.init(this);
+//        Web3jManager.init(this);
 
 
 //        new Thread(new Runnable() {
