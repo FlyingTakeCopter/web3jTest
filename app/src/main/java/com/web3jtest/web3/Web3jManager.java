@@ -249,11 +249,11 @@ public class Web3jManager {
                     if (personalUnlockAccount.accountUnlocked()) {
                         // 以某个用户的身份调用合约
                         TransactionManager transactionManager = new ClientTransactionManager(web3j, _goodsOwner);
-                        BigDecimal amount = new BigDecimal(_goodsVal);
-                        BigInteger value = Convert.toWei(amount, Convert.Unit.ETHER).toBigInteger();
+
                         CopyRight contract = CopyRight.deploy(web3j, transactionManager,
                                 Contract.GAS_PRICE, Contract.GAS_LIMIT, _name,
-                                value, BigInteger.valueOf(_ratio), BigInteger.valueOf(_commission), BigInteger.valueOf(_singleval)).send();
+                                BigInteger.valueOf(_goodsVal), BigInteger.valueOf(_ratio),
+                                BigInteger.valueOf(_commission), BigInteger.valueOf(_singleval)).send();
                         mapAddrContractToOwner.put(contract.getContractAddress(), _goodsOwner);
                         listener.onSuccess(_goodsOwner, contract.getContractAddress());
                     }
