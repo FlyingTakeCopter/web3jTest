@@ -16,6 +16,8 @@ import com.web3jtest.bean.GoodsBean;
 import com.web3jtest.web3.Web3jManager;
 
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +30,7 @@ public class MySubscriptionActivity extends AppCompatActivity implements View.On
     private ListView mGoodsListView;
     private GoodsAdapter mGoodsAdapter;
     private List<GoodsBean> mGoodsBeanList = new ArrayList<>();
-    private GoodsBean goodsBean;
+    private GoodsBean goodsBean = new GoodsBean();
     private ImageView mCancelBtn;
     private List<String> mGoodsAddress;
     private String userAddr;
@@ -40,7 +42,7 @@ public class MySubscriptionActivity extends AppCompatActivity implements View.On
         initView();
 
         mGoodsAddress = Web3jManager.getContractList();
-        userAddr = getIntent().getStringExtra("userAddress");
+        userAddr = Web3jManager.getAccount(0);
 
         requestAgentInfo();
     }
@@ -53,24 +55,59 @@ public class MySubscriptionActivity extends AppCompatActivity implements View.On
 
     private void requestAgentInfo(){
 
-        for (String s : mGoodsAddress){
+        for (final String s : mGoodsAddress){
             Web3jManager.getGoodsInfo(s, userAddr, new Web3jManager.ReqGetGoodsInfoListener(){
 
                 @Override
-                public void onSuccess(String _addr, String _name,
-                                      int _price, int _commRatio, int _shineRatio, int _sumAgenter,
-                                      int _allweight, int _allShine, int _allComm, int _singleval) {
-                    goodsBean.setAddr(_addr);
-                    goodsBean.setName(_name);
-                    goodsBean.setPrice(_price);
-                    goodsBean.setCommRatio(_commRatio);
-                    goodsBean.setShineRatio(_shineRatio);
-                    goodsBean.setSumAgenter(_sumAgenter);
-                    goodsBean.setAllweight(_allweight);
-                    goodsBean.setAllShine(_allShine);
-                    goodsBean.setAllComm(_allComm);
-                    goodsBean.setSingleval(_singleval);
-                    mGoodsBeanList.add(goodsBean);
+                public void onSuccess(String _addr, final String _name,
+                                      final int _price, final int _commRatio, final int _shineRatio, final int _sumAgenter,
+                                      final int _allweight, final int _allShine, final int _allComm, final int _singleval) {
+
+                    Web3jManager.getOwnerAgentCount(s, userAddr, new Web3jManager.ReqOwnerAgentCountListener(){
+                        @Override
+                        public void onSuccess(String _addr, int _count) {
+                            for (int i = 0; i < _count; i++){
+                                Web3jManager.getAgentInfoByIdx(s, userAddr, i, new Web3jManager.ReqAgentInfoByIdxListener() {
+                                    @Override
+                                    public void onSuccess(String _addr, int _agentid, String _owner,
+                                                          int _weight, int _createtime, int _profit) {
+                                        goodsBean.setAddr(_addr);
+                                        goodsBean.setName(_name);
+                                        goodsBean.setPrice(_price);
+                                        goodsBean.setCommRatio(_commRatio);
+                                        goodsBean.setShineRatio(_shineRatio);
+                                        goodsBean.setSumAgenter(_sumAgenter);
+                                        goodsBean.setAllweight(_allweight);
+                                        goodsBean.setAllShine(_allShine);
+                                        goodsBean.setAllComm(_allComm);
+                                        goodsBean.setSingleval(_singleval);
+                                        goodsBean.set_agentid(_agentid);
+                                        goodsBean.set_owner(_owner);
+                                        goodsBean.set_weight(_weight);
+                                        goodsBean.set_createtime(_createtime);
+                                        goodsBean.set_profit(_profit);
+                                        mGoodsBeanList.add(goodsBean);
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                mGoodsAdapter.notifyDataSetChanged();
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onError(Exception _e) {
+
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onError(Exception _e) {
+
+                        }
+                    });
                 }
 
                 @Override
@@ -78,6 +115,11 @@ public class MySubscriptionActivity extends AppCompatActivity implements View.On
 
                 }
             });
+
+
+
+
+
         }
         mGoodsAdapter = new GoodsAdapter(this, mGoodsBeanList);
         mGoodsListView.setAdapter(mGoodsAdapter);
@@ -138,14 +180,25 @@ public class MySubscriptionActivity extends AppCompatActivity implements View.On
                 viewHolder.mGoodsyongjin = (TextView) convertView.findViewById(R.id.goods_yongjin);
                 viewHolder.mGoodsallweight = (TextView) convertView.findViewById(R.id.goods_allweight);
                 viewHolder.mrengounum = (TextView) convertView.findViewById(R.id.rengou_num);
+                viewHolder.agentWeight = (TextView) convertView.findViewById(R.id.agent_benjin);
+                viewHolder.agentProfit = (TextView) convertView.findViewById(R.id.agent_shouyi);
 
                 convertView.setTag(viewHolder);
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
 
-            viewHolder.mGoodsName.setText(goodsBeanList.get(position).getName());
-            viewHolder.mGoodsPrice.setText(goodsBeanList.get(position).getPrice());
+            viewHolder.mGoodsName.setText(goodsBeanList.get(position).getName() + "");
+            viewHolder.mGoodsPrice.setText(goodsBeanList.get(position).getPrice() + "元");
+            viewHolder.mGoodsfenhong.setText(goodsBeanList.get(position).getShineRatio() + "%");
+            viewHolder.mGoodsyongjin.setText(goodsBeanList.get(position).getCommRatio() + "%");
+            int userweight = goodsBeanList.get(position).get_weight();
+            int allweight = goodsBeanList.get(position).getAllweight();
+            viewHolder.mGoodsallweight.setText(allweight + "");
+            viewHolder.mrengounum.setText((userweight / allweight * 100.0) + "%");
+            viewHolder.agentWeight.setText(userweight + "元");
+            viewHolder.agentProfit.setText(goodsBeanList.get(position).get_profit() + "");
+
 
 
             return convertView;
@@ -159,5 +212,7 @@ public class MySubscriptionActivity extends AppCompatActivity implements View.On
         TextView mGoodsyongjin;
         TextView mGoodsallweight;
         TextView mrengounum;
+        TextView agentWeight;
+        TextView agentProfit;
     }
 }

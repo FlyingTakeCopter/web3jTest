@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.web3jtest.web3.Web3jManager;
 
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,9 +38,9 @@ public class UserCenterActivity extends AppCompatActivity implements View.OnClic
         mNicknameTv = findViewById(R.id.nickname_tv);
         mAccountSwitch = findViewById(R.id.account_switch);
         list = new ArrayList<>();
-        list.add("用户编号111111111");
-        list.add("用户编号222222222");
-        list.add("用户编号333333333");
+        for (int i = 0 ;i < Web3jManager.getAccountCount(); i++){
+            list.add(Web3jManager.getAccount(i));
+        }
 
         /*新建适配器*/
         adapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,list);

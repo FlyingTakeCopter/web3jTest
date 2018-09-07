@@ -5,7 +5,7 @@ package com.web3jtest.bean;
  * @date 2018/9/1
  */
 public class GoodsBean {
-
+    // 商品
     String addr;
     String name;
     int price;
@@ -17,6 +17,51 @@ public class GoodsBean {
     int allComm;
     int singleval;
 
+    // 代理人
+    int _agentid;
+    String _owner;
+    int _weight;
+    int _createtime;
+    int _profit;
+
+    public int get_agentid() {
+        return _agentid;
+    }
+
+    public String get_owner() {
+        return _owner;
+    }
+
+    public int get_weight() {
+        return _weight;
+    }
+
+    public int get_createtime() {
+        return _createtime;
+    }
+
+    public int get_profit() {
+        return _profit;
+    }
+    public void set_agentid(int _agentid) {
+        this._agentid = _agentid;
+    }
+
+    public void set_owner(String _owner) {
+        this._owner = _owner;
+    }
+
+    public void set_weight(int _weight) {
+        this._weight = _weight;
+    }
+
+    public void set_createtime(int _createtime) {
+        this._createtime = _createtime;
+    }
+
+    public void set_profit(int _profit) {
+        this._profit = _profit;
+    }
     public String getAddr() {
         return addr;
     }

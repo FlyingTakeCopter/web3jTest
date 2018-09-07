@@ -24,6 +24,7 @@ import org.web3j.protocol.http.HttpService;
 import org.web3j.tuples.generated.Tuple4;
 import org.web3j.tuples.generated.Tuple5;
 import org.web3j.tuples.generated.Tuple6;
+import org.web3j.tuples.generated.Tuple7;
 import org.web3j.tuples.generated.Tuple9;
 import org.web3j.tx.ClientTransactionManager;
 import org.web3j.tx.Contract;
@@ -122,6 +123,7 @@ public class Web3jManager {
 
     public static String getBankAddress(){return bank;}
     public static String getAccount(int _idex){return accountList.get(_idex);}
+    public static int getAccountCount() {return accountList.size();}
     public static String getPassword() {    return password;
     }
 
@@ -482,6 +484,41 @@ public class Web3jManager {
         }).start();
     }
 
+    // 获取商品info
+    public static void getGoodsListInfo(final String _goodAddr, final String _addr, final int _agentid,
+                                    final ReqGoodsListInfoListener listener) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    TransactionManager transactionManager = new ClientTransactionManager(web3j, _addr);
+                    CopyRight contract = CopyRight.load(_goodAddr, web3j, transactionManager,
+                            Contract.GAS_PRICE, Contract.GAS_LIMIT);
+                    final Tuple7<String, BigInteger, BigInteger, BigInteger,
+                            BigInteger, BigInteger, BigInteger> res =
+                            contract.getAgentListInfo(BigInteger.valueOf(_agentid)).send();
+                    final String blanceETH = Convert.fromWei(res.getValue2().toString(), Convert.Unit.ETHER).toString();
+
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            listener.onSuccess(_goodAddr, res.getValue1(),
+                                    Integer.parseInt(blanceETH),
+                                    res.getValue3().intValue(),res.getValue4().intValue(),
+                                    res.getValue6().intValue(),res.getValue5().intValue(),
+                                    res.getValue7().intValue());
+                        }
+                    });
+
+                } catch (Exception e) {
+                    listener.onError(e);
+                }
+            }
+        }).start();
+
+
+    }
+
     // 根据商品合约信息
 //    public static void getGoodsInfo(final String _goodAddr, final String _addr, final ReqGetGoodsInfoListener listener){
 //        new Thread(new Runnable() {
@@ -505,6 +542,11 @@ public class Web3jManager {
 
     public interface Web3jReqListener{
         void onError(Exception _e);
+    }
+
+    public interface ReqGoodsListInfoListener extends Web3jReqListener{
+        void onSuccess(String _goodsAddr, String _name,int _goodval,int _shineRatio,int _agentCommission,
+                       int _allweight, int _curweight, int _shouyi);
     }
 
     public interface ReqVersionListener extends Web3jReqListener{

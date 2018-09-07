@@ -62,7 +62,7 @@
             android:id="@+id/goods_subscribe_price_text"
             style="@style/TextViewStyle"
             android:layout_marginBottom="10dp"
-            android:text="认购数" />
+            android:text="占比" />
 
 
     </LinearLayout>
@@ -131,11 +131,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:text="可提现总额"
+                android:text="本金:"
                 android:textColor="@color/textGray"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/agent_benjin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1000"
@@ -144,8 +145,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="元（本金 + 分红 + 佣金）"
+                android:text="   已获取收益:"
                 android:textColor="@color/textGray" />
+
+            <TextView
+                android:id="@+id/agent_shouyi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1000"
+                android:textColor="@color/colorBlue" />
 
         </LinearLayout>
 
