@@ -75,7 +75,7 @@
             android:textSize="12dp" />
 
         <EditText
-            android:id="@+id/goods_price"
+            android:id="@+id/goods_price1"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"

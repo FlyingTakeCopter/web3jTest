@@ -31,7 +31,9 @@ import org.web3j.utils.Convert;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 
@@ -49,8 +51,20 @@ public class Web3jManager {
     static List<String> accountList;
     static String password = "123";
 
+    static Map<String, String> mapAddrContractToOwner = new HashMap<>();
+    static Map<String, List<String> > mapAddrContractToAgent = new HashMap<>();
+
     private static BigDecimal defaultGasPrice = BigDecimal.valueOf(5);
     private static BigInteger unlockDuration = BigInteger.valueOf(60L);
+
+    // 合约地址与拥有者(商家)对照
+    public static Map<String, String> getContractToOwner() {
+        return mapAddrContractToOwner;
+    }
+    // 合约与代理人(认证者)对照
+    public static Map<String, List<String>> getContractToAgent() {
+        return mapAddrContractToAgent;
+    }
 
     public static void init(Context context){
         Properties properties = new Properties();
@@ -240,6 +254,7 @@ public class Web3jManager {
                         CopyRight contract = CopyRight.deploy(web3j, transactionManager,
                                 Contract.GAS_PRICE, Contract.GAS_LIMIT, _name,
                                 value, BigInteger.valueOf(_ratio), BigInteger.valueOf(_commission), BigInteger.valueOf(_singleval)).send();
+                        mapAddrContractToOwner.put(contract.getContractAddress(), _goodsOwner);
                         listener.onSuccess(_goodsOwner, contract.getContractAddress());
                     }
                 } catch (Exception e) {
@@ -315,6 +330,7 @@ public class Web3jManager {
 
                         contract.createAgent(BigInteger.valueOf(_weight)).send();
                         BigInteger bgInt = contract.getOwnerAgentCount().send();
+                        mapAddrContractToAgent.get(_goodAddr).add(_buyer);
                         listener.onSuccess(_goodAddr, _buyer, bgInt.intValue());
                     }
                 } catch (Exception e) {
