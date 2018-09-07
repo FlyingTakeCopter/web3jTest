@@ -64,6 +64,7 @@ public class Web3jManager {
         }
         web3j = Web3jFactory.build(new HttpService(url));
         admin = AdminFactory.build(new HttpService(url));
+        loadAccounts();
     }
 
     public static void loadAccounts(){
