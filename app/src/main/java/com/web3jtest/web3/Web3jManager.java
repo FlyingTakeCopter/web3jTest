@@ -11,6 +11,7 @@ import org.web3j.protocol.admin.AdminFactory;
 import org.web3j.protocol.admin.methods.response.PersonalUnlockAccount;
 import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.methods.request.Transaction;
+import org.web3j.protocol.core.methods.response.EthAccounts;
 import org.web3j.protocol.core.methods.response.EthEstimateGas;
 import org.web3j.protocol.core.methods.response.EthGetBalance;
 import org.web3j.protocol.core.methods.response.EthGetTransactionCount;
@@ -30,6 +31,7 @@ import org.web3j.utils.Convert;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 
@@ -42,6 +44,9 @@ import static org.web3j.protocol.http.HttpService.DEFAULT_URL;
 public class Web3jManager {
     static Web3j web3j;
     static Admin admin;
+
+    static String bank;
+    static List<String> accountList;
 
     private static BigDecimal defaultGasPrice = BigDecimal.valueOf(5);
     private static BigInteger unlockDuration = BigInteger.valueOf(60L);
@@ -60,6 +65,27 @@ public class Web3jManager {
         web3j = Web3jFactory.build(new HttpService(url));
         admin = AdminFactory.build(new HttpService(url));
     }
+
+    public static void loadAccounts(){
+        //获取账户列表
+        EthAccounts ethAccounts = null;
+        try {
+            ethAccounts = web3j.ethAccounts().sendAsync().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        List<String> _accountList = ethAccounts.getAccounts();//返回当前节点持有的账户列表
+        if(_accountList.size() > 1){
+            bank = _accountList.get(0);
+            _accountList.remove(0);
+            accountList = _accountList;
+        }
+    }
+
+    public static String getBankAddress(){return bank;}
+    public static String getAccount(int _idex){return accountList.get(_idex);}
 
     // 测试函数
     public static void getVersion(final ReqVersionListener listener){
