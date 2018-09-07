@@ -48,8 +48,6 @@ public class MySubscriptionActivity extends AppCompatActivity implements View.On
     private void initView() {
         mCancelBtn = findViewById(R.id.cancel_btn);
         mGoodsListView = findViewById(R.id.goods_list);
-        mGoodsAdapter = new GoodsAdapter(this, mGoodsBeanList);
-        mGoodsListView.setAdapter(mGoodsAdapter);
         mCancelBtn.setOnClickListener(this);
     }
 
@@ -62,7 +60,17 @@ public class MySubscriptionActivity extends AppCompatActivity implements View.On
                 public void onSuccess(String _addr, String _name,
                                       int _price, int _commRatio, int _shineRatio, int _sumAgenter,
                                       int _allweight, int _allShine, int _allComm, int _singleval) {
-                    mGoodsBeanList.add(new GoodsBean());
+                    goodsBean.setAddr(_addr);
+                    goodsBean.setName(_name);
+                    goodsBean.setPrice(_price);
+                    goodsBean.setCommRatio(_commRatio);
+                    goodsBean.setShineRatio(_shineRatio);
+                    goodsBean.setSumAgenter(_sumAgenter);
+                    goodsBean.setAllweight(_allweight);
+                    goodsBean.setAllShine(_allShine);
+                    goodsBean.setAllComm(_allComm);
+                    goodsBean.setSingleval(_singleval);
+                    mGoodsBeanList.add(goodsBean);
                 }
 
                 @Override
@@ -71,6 +79,8 @@ public class MySubscriptionActivity extends AppCompatActivity implements View.On
                 }
             });
         }
+        mGoodsAdapter = new GoodsAdapter(this, mGoodsBeanList);
+        mGoodsListView.setAdapter(mGoodsAdapter);
     }
 
     @Override
@@ -133,6 +143,9 @@ public class MySubscriptionActivity extends AppCompatActivity implements View.On
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
+
+            viewHolder.mGoodsName.setText(goodsBeanList.get(position).getName());
+            viewHolder.mGoodsPrice.setText(goodsBeanList.get(position).getPrice());
 
 
             return convertView;
