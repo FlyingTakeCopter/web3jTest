@@ -51,6 +51,7 @@
 
         <activity android:name=".UserCenterActivity"
             android:launchMode="singleTask"/>
+        <activity android:name=".ShareActivity"/>
     </application>
 
 </manifest>
