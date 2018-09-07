@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.web3jtest.shopping.ProductDetailActivity;
+
 /**
  * 商品列表页
  *
@@ -48,8 +50,9 @@ public class GoodslistActivity extends AppCompatActivity implements View.OnClick
                 startActivity(intent_user);
                 break;
             case R.id.click_view:
-                Intent intent_goods_detail = new Intent(this, GoodsDetailActivity.class);
-                startActivity(intent_goods_detail);
+                startActivity(new Intent(this, ProductDetailActivity.class));
+//                Intent intent_goods_detail = new Intent(this, GoodsDetailActivity.class);
+//                startActivity(intent_goods_detail);
                 break;
             default:
                 break;

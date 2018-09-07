@@ -54,11 +54,28 @@ public class Web3jManager {
     static List<String> accountList;
     static String password = "123";
 
+
+
+    static List<String> contractList = new ArrayList<>();
     static Map<String, String> mapAddrContractToOwner = new HashMap<>();
     static Map<String, List<String> > mapAddrContractToAgent = new HashMap<>();
 
     private static BigDecimal defaultGasPrice = BigDecimal.valueOf(5);
     private static BigInteger unlockDuration = BigInteger.valueOf(60L);
+
+    private static String curUserAddr;
+
+    public static List<String> getContractList() {
+        return contractList;
+    }
+
+    public static void setCurUserAddr(String curUserAddr) {
+        Web3jManager.curUserAddr = curUserAddr;
+    }
+
+    public static String getCurUserAddr() {
+        return curUserAddr;
+    }
 
     // 合约地址与拥有者(商家)对照
     public static Map<String, String> getContractToOwner() {
@@ -258,6 +275,7 @@ public class Web3jManager {
                                 Contract.GAS_PRICE, Contract.GAS_LIMIT, _name,
                                 value, BigInteger.valueOf(_ratio), BigInteger.valueOf(_commission), BigInteger.valueOf(_singleval)).send();
                         mapAddrContractToOwner.put(contract.getContractAddress(), _goodsOwner);
+                        contractList.add(contract.getContractAddress());
                         listener.onSuccess(_goodsOwner, contract.getContractAddress());
                     }
                 } catch (Exception e) {

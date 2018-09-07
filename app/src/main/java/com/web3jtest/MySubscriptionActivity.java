@@ -30,7 +30,7 @@ public class MySubscriptionActivity extends AppCompatActivity implements View.On
     private List<GoodsBean> mGoodsBeanList = new ArrayList<>();
     private GoodsBean goodsBean;
     private ImageView mCancelBtn;
-    private String[] mGoodsAddress;
+    private List<String> mGoodsAddress;
     private String userAddr;
 
     @Override
@@ -39,7 +39,7 @@ public class MySubscriptionActivity extends AppCompatActivity implements View.On
         setContentView(R.layout.activity_subscription_list);
         initView();
 
-        mGoodsAddress = getIntent().getStringArrayExtra("goodsAddress");
+        mGoodsAddress = Web3jManager.getContractList();
         userAddr = getIntent().getStringExtra("userAddress");
 
         requestAgentInfo();

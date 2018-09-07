@@ -397,7 +397,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 break;
             case R.id.shopping:
-                startActivity(new Intent(this, ProductListActivity.class));
+                startActivity(new Intent(this, GoodslistActivity.class));
         }
     }
 
