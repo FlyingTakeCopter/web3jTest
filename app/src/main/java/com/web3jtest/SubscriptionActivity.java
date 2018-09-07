@@ -53,8 +53,8 @@ public class SubscriptionActivity extends BaseActivity implements View.OnClickLi
         setContentView(R.layout.activity_subscription);
         init();
 
-        goodsAddr = getIntent().getStringExtra("goodsAddr");
-        userAddr = getIntent().getStringExtra("userAddr");
+        goodsAddr = Web3jManager.getContractList().get(0);
+        userAddr = Web3jManager.getCurUserAddr();
 
 
         reqGeth();

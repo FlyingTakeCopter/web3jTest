@@ -28,29 +28,6 @@ public class OrderActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-        showProgress();
-        Web3jManager.deploy(Web3jManager.getAccount(0), Web3jManager.getPassword(), "黑鲨手机", 3199,
-                20, 20, 10, new Web3jManager.ReqDepolyListener(){
-
-                    @Override
-                    public void onSuccess(String _goodsOwner, String _contractAddr) {
-                        dismissProgress();
-                        Intent intent = new Intent(OrderActivity.this, SubscriptionActivity.class);
-                        intent.putExtra("goodsAddr", _contractAddr);
-                        intent.putExtra("userAddr", _goodsOwner);
-                        startActivity(intent);
-                    }
-
-                    @Override
-                    public void onError(final Exception _e) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                dismissProgress();
-                                Toast.makeText(OrderActivity.this, _e.getMessage(), Toast.LENGTH_LONG).show();
-                            }
-                        });
-                    }
-                });
+        startActivity(new Intent(this, SubscriptionActivity.class));
     }
 }
