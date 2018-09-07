@@ -34,16 +34,32 @@
         android:background="@color/jdRed"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/detail_top_title"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:text="编号01合约生效中"
-            android:textColor="@color/colorWhite"
-            android:textSize="18dp" />
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/detail_top_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:text="编号01合约生效中"
+                android:textColor="@color/colorWhite"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/detail_top_share"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:text="分享"
+                android:textColor="@color/colorWhite"
+                android:textSize="18dp" />
+        </RelativeLayout>
 
         <View
             android:layout_width="match_parent"

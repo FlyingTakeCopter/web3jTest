@@ -1,25 +1,40 @@
 package com.web3jtest;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.TextView;
+
+import com.web3jtest.web3.Web3jManager;
 
 import org.w3c.dom.Text;
 
 /**
  * 认购页面
  */
-public class SubscriptionDetailActivity extends AppCompatActivity {
+public class SubscriptionDetailActivity extends AppCompatActivity implements View.OnClickListener{
     private TextView topTitle, topValue1, topValue2, topValue3;
     private TextView line1, line2, line3, line4, line5, line6, line7, line8, line9;
-    private TextView btnLeft, btnRight;
+    private TextView btnLeft, btnRight, btnShare;
+
+    private String goodsAddr;//商品地址
+    private String userAddr;//用户地址
+
+    private int curfen = 0;
+    private int singleval = 0;
+    private float sumWeight = 0;
+    private float shineRatio = 0;
+    private float commRatio = 0;
+    private float goodsPrice = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subscription_detail);
         initView();
+        reqGeth();
     }
 
     private void initView() {
@@ -38,7 +53,63 @@ public class SubscriptionDetailActivity extends AppCompatActivity {
         line9 = findViewById(R.id.detail_content_line9);
         btnLeft = findViewById(R.id.detail_bottom_left);
         btnRight = findViewById(R.id.detail_bottom_right);
+        btnShare = findViewById(R.id.detail_top_share);
+
+        btnShare.setOnClickListener(this);
+        btnRight.setOnClickListener(this);
+        btnLeft.setOnClickListener(this);
     }
 
+    private void reqGeth(){
+        Web3jManager.getGoodsInfo(goodsAddr, userAddr, new Web3jManager.ReqGetGoodsInfoListener() {
+
+            @Override
+            public void onSuccess(String _addr, String _name, int _price, int _commRatio, int _shineRatio, int _sumAgenter, int _allweight, int _allShine, int _allComm, int _singleval) {
+                sumWeight = _allweight;
+                shineRatio = _shineRatio;
+                commRatio = _commRatio;
+                goodsPrice = _price;
+
+                topValue1.setText(_allweight + "");
+                topValue2.setText(_allShine + "");
+                topValue3.setText(_allComm + "");
+                line1.setText(_addr);
+                line2.setText(_shineRatio + "%");
+                line3.setText(_price * _shineRatio / 100.0 + "");
+                line4.setText(_commRatio + "%");
+                line5.setText(_price * _commRatio / 100.0 + "");
+                line6.setText(_sumAgenter + "");
+                line7.setText(_singleval + "");
+                line8.setText( _allweight == 0 ? "100%" : ( 100.0 * _singleval / (_allweight + _singleval) + "%"));
+                line9.setText(_price * _shineRatio / 100.0 * (_singleval / (_allweight + _singleval)) + "");
+
+                curfen = 1;
+                singleval = _singleval;
+//                rengounum.setText(1 + "");
+//                rengousum.setText(_singleval + "");
+            }
+
+            @Override
+            public void onError(Exception _e) {
+
+            }
+        });
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.detail_bottom_left:   //撤资
+
+                break;
+            case R.id.detail_bottom_right:  //转让
+
+                break;
+            case R.id.detail_top_share:  //分享
+                Intent i = new Intent(this, ShareActivity.class);
+                startActivity(i);
+                break;
+        }
+    }
 
 }
