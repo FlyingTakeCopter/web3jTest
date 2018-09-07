@@ -1,6 +1,8 @@
 package com.web3jtest.web3;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 
 import com.web3jtest.contract.CopyRight;
 
@@ -21,7 +23,6 @@ import org.web3j.protocol.core.methods.response.Web3ClientVersion;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.tuples.generated.Tuple4;
 import org.web3j.tuples.generated.Tuple5;
-import org.web3j.tuples.generated.Tuple6;
 import org.web3j.tuples.generated.Tuple9;
 import org.web3j.tx.ClientTransactionManager;
 import org.web3j.tx.Contract;
@@ -52,7 +53,7 @@ public class Web3jManager {
     static String password = "123";
 
     static Map<String, String> mapAddrContractToOwner = new HashMap<>();
-    static Map<String, List<String> > mapAddrContractToAgent = new HashMap<>();
+    static Map<String, List<String>> mapAddrContractToAgent = new HashMap<>();
 
     private static BigDecimal defaultGasPrice = BigDecimal.valueOf(5);
     private static BigInteger unlockDuration = BigInteger.valueOf(60L);
@@ -61,17 +62,18 @@ public class Web3jManager {
     public static Map<String, String> getContractToOwner() {
         return mapAddrContractToOwner;
     }
+
     // 合约与代理人(认证者)对照
     public static Map<String, List<String>> getContractToAgent() {
         return mapAddrContractToAgent;
     }
 
-    public static void init(Context context){
+    public static void init(Context context) {
         Properties properties = new Properties();
         String url = DEFAULT_URL;
         try {
             properties.load(context.getAssets().open("config.properties"));
-            url = properties.getProperty("url");
+            url = properties.getProperty("url", url);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -82,7 +84,7 @@ public class Web3jManager {
         loadAccounts();
     }
 
-    public static void loadAccounts(){
+    public static void loadAccounts() {
         //获取账户列表
         EthAccounts ethAccounts = null;
         try {
@@ -93,20 +95,23 @@ public class Web3jManager {
             e.printStackTrace();
         }
         List<String> _accountList = ethAccounts.getAccounts();//返回当前节点持有的账户列表
-        if(_accountList.size() > 1){
+        if (_accountList.size() > 1) {
             bank = _accountList.get(0);
             _accountList.remove(0);
             accountList = _accountList;
         }
     }
 
-    public static String getBankAddress(){return bank;}
-    public static String getAccount(int _idex){return accountList.get(_idex);}
-    public static String getPassword() {    return password;
+    public static String getBankAddress() {return bank;}
+
+    public static String getAccount(int _idex) {return accountList.get(_idex);}
+
+    public static String getPassword() {
+        return password;
     }
 
     // 测试函数
-    public static void getVersion(final ReqVersionListener listener){
+    public static void getVersion(final ReqVersionListener listener) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -212,7 +217,7 @@ public class Web3jManager {
     }
 
     // 查询用户余额
-    public static void getBalance(final String _addr, final ReqGetBalanceListener listener){
+    public static void getBalance(final String _addr, final ReqGetBalanceListener listener) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -239,7 +244,7 @@ public class Web3jManager {
     public static void deploy(final String _goodsOwner, final String _pwd, final String _name,
                               final int _goodsVal, final int _ratio, final int _commission,
                               final int _singleval,
-                              final ReqDepolyListener listener){
+                              final ReqDepolyListener listener) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -266,7 +271,7 @@ public class Web3jManager {
 
     // 普通用户购买商品
     public static void buy(final String _goodAddr, final String _buyer, final String pwd, final int _val
-                            , final ReqSellListener listener){
+            , final ReqSellListener listener) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -292,7 +297,7 @@ public class Web3jManager {
 
     // 普通用户通过认证者购买商品
     public static void buyByAgent(final String _goodAddr, final String _buyer, final String pwd,
-                                  final int _agentid, final int _val, final ReqSellByAgentListener listener){
+                                  final int _agentid, final int _val, final ReqSellByAgentListener listener) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -317,7 +322,7 @@ public class Web3jManager {
 
     // 认证二级代理权，返回刚注册的代理ID
     public static void createAgent(final String _goodAddr, final String _buyer, final String pwd,
-                                   final int _weight, final ReqSignUpListener listener){
+                                   final int _weight, final ReqSignUpListener listener) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -342,7 +347,7 @@ public class Web3jManager {
 
     // 获取代理info
     public static void getAgentInfo(final String _goodAddr, final String _addr, final int _agentid,
-                                    final ReqAgentInfoListener listener){
+                                    final ReqAgentInfoListener listener) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -362,7 +367,7 @@ public class Web3jManager {
 
     // 获取代理总数
     public static void getOwnerAgentCount(final String _goodAddr, final String _addr,
-                                          final ReqOwnerAgentCountListener listener){
+                                          final ReqOwnerAgentCountListener listener) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -381,7 +386,7 @@ public class Web3jManager {
 
     // 根据idx获取代理id
     public static void getAgentIdByIdx(final String _goodAddr, final String _addr,
-                                       final int _agentidx, final ReqAgentIdByIdxListener listener){
+                                       final int _agentidx, final ReqAgentIdByIdxListener listener) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -400,7 +405,7 @@ public class Web3jManager {
 
     // 根据idx获取代理Info
     public static void getAgentInfoByIdx(final String _goodAddr, final String _addr,
-                                         final int _agentidx, final ReqAgentInfoByIdxListener listener){
+                                         final int _agentidx, final ReqAgentInfoByIdxListener listener) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -420,7 +425,7 @@ public class Web3jManager {
     }
 
     // 获取商品info
-    public static void getGoodsInfo(final String _goodAddr, final String _addr, final ReqGetGoodsInfoListener listener){
+    public static void getGoodsInfo(final String _goodAddr, final String _addr, final ReqGetGoodsInfoListener listener) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -428,14 +433,19 @@ public class Web3jManager {
                     TransactionManager transactionManager = new ClientTransactionManager(web3j, _addr);
                     CopyRight contract = CopyRight.load(_goodAddr, web3j, transactionManager,
                             Contract.GAS_PRICE, Contract.GAS_LIMIT);
-                    Tuple9<String, BigInteger, BigInteger, BigInteger, BigInteger, BigInteger,
+                    final Tuple9<String, BigInteger, BigInteger, BigInteger, BigInteger, BigInteger,
                             BigInteger, BigInteger, BigInteger> res =
                             contract.getGoodsInfo().send();
-                    listener.onSuccess(_goodAddr, res.getValue1(), res.getValue2().intValue(),
-                            res.getValue3().intValue(), res.getValue4().intValue(),
-                            res.getValue5().intValue(), res.getValue6().intValue(),
-                            res.getValue7().intValue(), res.getValue8().intValue(),
-                            res.getValue9().intValue());
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            listener.onSuccess(_goodAddr, res.getValue1(), res.getValue2().intValue(),
+                                    res.getValue3().intValue(), res.getValue4().intValue(),
+                                    res.getValue5().intValue(), res.getValue6().intValue(),
+                                    res.getValue7().intValue(), res.getValue8().intValue(),
+                                    res.getValue9().intValue());
+                        }
+                    });
                 } catch (Exception e) {
                     listener.onError(e);
                 }
@@ -464,61 +474,61 @@ public class Web3jManager {
 //        }).start();
 //    }
 
-    public interface Web3jReqListener{
+    public interface Web3jReqListener {
         void onError(Exception _e);
     }
 
-    public interface ReqVersionListener extends Web3jReqListener{
+    public interface ReqVersionListener extends Web3jReqListener {
         void onSuccess(String _version);
     }
 
-    public interface ReqDepolyListener extends Web3jReqListener{
+    public interface ReqDepolyListener extends Web3jReqListener {
         void onSuccess(String _goodsOwner, String _contractAddr);
     }
 
-    public interface ReqSignUpListener extends Web3jReqListener{
+    public interface ReqSignUpListener extends Web3jReqListener {
         void onSuccess(String _goodAddr, String _buyer, int _agentCount);
     }
 
-    public interface ReqGetBalanceListener extends Web3jReqListener{
+    public interface ReqGetBalanceListener extends Web3jReqListener {
         void onSuccess(String _addr, String _balance);
     }
 
-    public interface ReqSendTransferListener extends Web3jReqListener{
-        void onSuccess(String _from, String _to, int _val,String _result);
+    public interface ReqSendTransferListener extends Web3jReqListener {
+        void onSuccess(String _from, String _to, int _val, String _result);
     }
 
-    public interface ReqSellListener extends Web3jReqListener{
+    public interface ReqSellListener extends Web3jReqListener {
         void onSuccess(String _goodAddr, String _buyer, String _blockAddr);
     }
 
     // 通过代理购买商品
-    public interface ReqSellByAgentListener extends Web3jReqListener{
+    public interface ReqSellByAgentListener extends Web3jReqListener {
         void onSuccess(String _goodAddr, String _buyer, String _blockAddr);
     }
 
     //获取代理信息
-    public interface ReqAgentInfoListener extends Web3jReqListener{
+    public interface ReqAgentInfoListener extends Web3jReqListener {
         void onSuccess(String _owner, int _weight, int _createtime, int _profit);
     }
 
     // 获取代理数量
-    public interface ReqOwnerAgentCountListener extends Web3jReqListener{
+    public interface ReqOwnerAgentCountListener extends Web3jReqListener {
         void onSuccess(String _addr, int _count);
     }
 
     // 获取代理id
-    public interface ReqAgentIdByIdxListener extends Web3jReqListener{
+    public interface ReqAgentIdByIdxListener extends Web3jReqListener {
         void onSuccess(String _addr, int _agentid);
     }
 
     // 获取代理Info
-    public interface ReqAgentInfoByIdxListener extends Web3jReqListener{
-        void onSuccess(String _addr, int _agentid,String _owner, int _weight, int _createtime, int _profit);
+    public interface ReqAgentInfoByIdxListener extends Web3jReqListener {
+        void onSuccess(String _addr, int _agentid, String _owner, int _weight, int _createtime, int _profit);
     }
 
     // 获取商品信息
-    public interface ReqGetGoodsInfoListener extends Web3jReqListener{
+    public interface ReqGetGoodsInfoListener extends Web3jReqListener {
         void onSuccess(String _addr, String _name, int _price,
                        int _commRatio, int _shineRatio,
                        int _sumAgenter, int _allweight,

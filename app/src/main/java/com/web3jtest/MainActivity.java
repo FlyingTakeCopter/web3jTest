@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.web3jtest.shopping.ProductListActivity;
 import com.web3jtest.web3.Web3jManager;
 
 import java.io.BufferedReader;
@@ -78,6 +79,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnSellByAgent.setOnClickListener(this);
         btnPrice.setOnClickListener(this);
         btnAgentInfo.setOnClickListener(this);
+
+        findViewById(R.id.shopping).setOnClickListener(this);
         btnGoodsList.setOnClickListener(this);
     }
 
@@ -393,6 +396,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             default:
                 break;
+            case R.id.shopping:
+                startActivity(new Intent(this, ProductListActivity.class));
         }
     }
 

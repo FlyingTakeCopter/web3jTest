@@ -487,7 +487,8 @@
                 android:gravity="center"
                 android:text="总金额:200"
                 android:textColor="@color/colorWhite"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_width="0dp"/>
 
             <TextView
                 android:id="@+id/confirm"
@@ -496,7 +497,8 @@
                 android:gravity="center"
                 android:text="认购"
                 android:textColor="@color/colorWhite"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_width="0dp"/>
 
 
         </LinearLayout>

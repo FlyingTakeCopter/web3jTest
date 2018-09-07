@@ -1,7 +1,6 @@
 package com.web3jtest;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -12,8 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.web3jtest.web3.Web3jManager;
-
-import org.w3c.dom.Text;
 
 /**
  * 认购页面
@@ -102,13 +99,13 @@ public class SubscriptionActivity extends AppCompatActivity implements View.OnCl
                 goodsPrice = _price;
 
                 goodsno.setText(_addr);
-                allweight.setText(_allweight);
-                allfenhong.setText(_allShine);
-                allyongjin.setText(_allComm);
+                allweight.setText(_allweight + "");
+                allfenhong.setText(_allShine + "");
+                allyongjin.setText(_allComm + "");
                 fenhongzhanbi.setText(_shineRatio + "%");
                 yongjinzhanbi.setText(_commRatio + "%");
-                curAgentSum.setText(_sumAgenter);
-                rengouvalue.setText(_singleval);
+                curAgentSum.setText(_sumAgenter + "");
+                rengouvalue.setText(_singleval + "");
 
                 danbifenhong.setText(_price * _shineRatio / 100.0 + "");
                 curyongjin.setText(_price * _commRatio / 100.0 + "");
@@ -119,7 +116,7 @@ public class SubscriptionActivity extends AppCompatActivity implements View.OnCl
                 curfen = 1;
                 singleval = _singleval;
                 rengounum.setText(1 + "");
-                rengousum.setText(_singleval);
+                rengousum.setText(_singleval + "");
             }
 
             @Override

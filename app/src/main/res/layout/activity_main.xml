@@ -74,7 +74,11 @@
         android:layout_height="wrap_content"
         android:text="商品列表"/>
 
-
+    <Button
+        android:id="@+id/shopping"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="去购物"/>
 
     <TextView
         android:id="@+id/text"
