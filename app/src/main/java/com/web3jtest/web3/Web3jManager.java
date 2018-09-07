@@ -33,6 +33,7 @@ import org.web3j.utils.Convert;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -332,7 +333,15 @@ public class Web3jManager {
 
                         contract.createAgent(BigInteger.valueOf(_weight)).send();
                         BigInteger bgInt = contract.getOwnerAgentCount().send();
-                        mapAddrContractToAgent.get(_goodAddr).add(_buyer);
+
+
+                        List<String> list = mapAddrContractToAgent.get(_goodAddr);
+                        if (list == null){
+                            list = new ArrayList<String>();
+                            mapAddrContractToAgent.put(_goodAddr, list);
+                        }
+                        list.add(_buyer);
+
                         listener.onSuccess(_goodAddr, _buyer, bgInt.intValue());
                     }
                 } catch (Exception e) {

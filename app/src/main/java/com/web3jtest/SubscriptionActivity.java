@@ -15,7 +15,7 @@ import com.web3jtest.web3.Web3jManager;
 /**
  * 认购页面
  */
-public class SubscriptionActivity extends AppCompatActivity implements View.OnClickListener {
+public class SubscriptionActivity extends BaseActivity implements View.OnClickListener {
 
     TextView today;//申请日期
     TextView allweight;//全部权重
@@ -151,16 +151,29 @@ public class SubscriptionActivity extends AppCompatActivity implements View.OnCl
                 break;
             }
             case R.id.confirm:{
+                showLoading("认购合约中。。。", false);
                 Web3jManager.createAgent(goodsAddr, userAddr, "123", (singleval * curfen), new Web3jManager.ReqSignUpListener() {
                     @Override
                     public void onSuccess(String _goodAddr, String _buyer, int _agentCount) {
-                        Toast.makeText(getApplicationContext(), "认购成功!", Toast.LENGTH_SHORT).show();
                         finish();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplicationContext(), "认购成功！", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                        endLoading();
                     }
 
                     @Override
                     public void onError(Exception _e) {
-                        Toast.makeText(getApplicationContext(), "error:" + _e.toString(), Toast.LENGTH_SHORT).show();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplicationContext(), "认购失败！", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                        endLoading();
                     }
                 });
 
