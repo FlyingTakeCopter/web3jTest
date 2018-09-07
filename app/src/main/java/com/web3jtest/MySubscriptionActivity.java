@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.web3jtest.bean.GoodsBean;
+import com.web3jtest.web3.Web3jManager;
 
 
 import java.util.ArrayList;
@@ -29,23 +30,47 @@ public class MySubscriptionActivity extends AppCompatActivity implements View.On
     private List<GoodsBean> mGoodsBeanList = new ArrayList<>();
     private GoodsBean goodsBean;
     private ImageView mCancelBtn;
+    private String[] mGoodsAddress;
+    private String userAddr;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subscription_list);
         initView();
+
+        mGoodsAddress = getIntent().getStringArrayExtra("goodsAddress");
+        userAddr = getIntent().getStringExtra("userAddress");
+
+        requestAgentInfo();
     }
 
     private void initView() {
         mCancelBtn = findViewById(R.id.cancel_btn);
         mGoodsListView = findViewById(R.id.goods_list);
-        for (int i = 0; i < 5; i++) {
-            mGoodsBeanList.add(goodsBean);
-        }
         mGoodsAdapter = new GoodsAdapter(this, mGoodsBeanList);
         mGoodsListView.setAdapter(mGoodsAdapter);
         mCancelBtn.setOnClickListener(this);
+    }
+
+    private void requestAgentInfo(){
+
+        for (String s : mGoodsAddress){
+            Web3jManager.getGoodsInfo(s, userAddr, new Web3jManager.ReqGetGoodsInfoListener(){
+
+                @Override
+                public void onSuccess(String _addr, String _name,
+                                      int _price, int _commRatio, int _shineRatio, int _sumAgenter,
+                                      int _allweight, int _allShine, int _allComm, int _singleval) {
+                    mGoodsBeanList.add(new GoodsBean());
+                }
+
+                @Override
+                public void onError(Exception _e) {
+
+                }
+            });
+        }
     }
 
     @Override
@@ -97,13 +122,12 @@ public class MySubscriptionActivity extends AppCompatActivity implements View.On
                 convertView = LayoutInflater.from(mContext).inflate(
                         R.layout.item_goods, parent, false);
                 viewHolder = new ViewHolder();
-//                viewHolder.mGoodsName = (TextView) convertView.findViewById(R.id.goods_name);
-//                viewHolder.mGoodsAddress = (TextView) convertView.findViewById(R.id.goods_address);
-//                viewHolder.mGoodsPrice = (TextView) convertView.findViewById(R.id.goods_price);
-//                viewHolder.mGoodsCoefficient = (TextView) convertView.findViewById(R.id.goods_coefficient);
-//                viewHolder.mGoodsCommission = (TextView) convertView.findViewById(R.id.goods_commission);
-//                viewHolder.mGoodsSubscribePeopleNum = (TextView) convertView.findViewById(R.id.goods_subscribe_people_num);
-//                viewHolder.mGoodsSubscribePrice = (TextView) convertView.findViewById(R.id.goods_subscribe_price);
+                viewHolder.mGoodsName = (TextView) convertView.findViewById(R.id.goods_name);
+                viewHolder.mGoodsPrice = (TextView) convertView.findViewById(R.id.goods_price);
+                viewHolder.mGoodsfenhong = (TextView) convertView.findViewById(R.id.goods_fenhong);
+                viewHolder.mGoodsyongjin = (TextView) convertView.findViewById(R.id.goods_yongjin);
+                viewHolder.mGoodsallweight = (TextView) convertView.findViewById(R.id.goods_allweight);
+                viewHolder.mrengounum = (TextView) convertView.findViewById(R.id.rengou_num);
 
                 convertView.setTag(viewHolder);
             } else {
@@ -117,11 +141,10 @@ public class MySubscriptionActivity extends AppCompatActivity implements View.On
 
     private class ViewHolder {
         TextView mGoodsName;
-        TextView mGoodsAddress;
         TextView mGoodsPrice;
-        TextView mGoodsCoefficient;
-        TextView mGoodsCommission;
-        TextView mGoodsSubscribePeopleNum;
-        TextView mGoodsSubscribePrice;
+        TextView mGoodsfenhong;
+        TextView mGoodsyongjin;
+        TextView mGoodsallweight;
+        TextView mrengounum;
     }
 }

@@ -10,6 +10,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/goods_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
@@ -77,40 +78,33 @@
 
 
         <TextView
-            android:id="@+id/goods_address"
+            android:id="@+id/goods_price"
             style="@style/TextViewStyle"
             android:layout_width="100dp"
             android:ellipsize="middle"
             android:gravity="right"
             android:singleLine="true"
-            android:text="0x855ce19c4714c980a35c985704947ecd1e9992a0" />
+            android:text="--" />
 
         <TextView
-            android:id="@+id/goods_price"
+            android:id="@+id/goods_fenhong"
             style="@style/TextViewStyle"
-            android:text="￥1000" />
+            android:text="--" />
 
         <TextView
-            android:id="@+id/goods_coefficient"
+            android:id="@+id/goods_yongjin"
             style="@style/TextViewStyle"
-            android:text="20%" />
+            android:text="--" />
 
         <TextView
-            android:id="@+id/goods_commission"
+            android:id="@+id/goods_allweight"
             style="@style/TextViewStyle"
-            android:text="￥1000" />
+            android:text="--" />
 
         <TextView
-            android:id="@+id/goods_subscribe_people_num"
+            android:id="@+id/rengou_num"
             style="@style/TextViewStyle"
-            android:text="1000(人)" />
-
-        <TextView
-            android:id="@+id/goods_subscribe_price"
-            style="@style/TextViewStyle"
-            android:layout_marginBottom="10dp"
-            android:text="￥1000" />
-
+            android:text="--" />
     </LinearLayout>
 
     <LinearLayout
