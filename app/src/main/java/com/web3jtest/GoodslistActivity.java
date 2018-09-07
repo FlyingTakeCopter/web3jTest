@@ -16,6 +16,7 @@ public class GoodslistActivity extends AppCompatActivity implements View.OnClick
 
     private ImageView mSellerIv;
     private View mClickView;
+    private ImageView mUserIv;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,9 +29,11 @@ public class GoodslistActivity extends AppCompatActivity implements View.OnClick
     private void initView() {
         mSellerIv = findViewById(R.id.seller_iv);
         mClickView = findViewById(R.id.click_view);
+        mUserIv = findViewById(R.id.user_iv);
 
         mSellerIv.setOnClickListener(this);
         mClickView.setOnClickListener(this);
+        mUserIv.setOnClickListener(this);
     }
 
     @Override
@@ -41,7 +44,8 @@ public class GoodslistActivity extends AppCompatActivity implements View.OnClick
                 startActivity(intent);
                 break;
             case R.id.user_iv:
-
+                Intent intent_user = new Intent(this, UserCenterActivity.class);
+                startActivity(intent_user);
                 break;
             case R.id.click_view:
                 Intent intent_goods_detail = new Intent(this, GoodsDetailActivity.class);
