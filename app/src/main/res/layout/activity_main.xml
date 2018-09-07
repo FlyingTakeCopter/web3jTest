@@ -68,6 +68,12 @@
         android:text="商品价格"
         android:visibility="gone"/>
 
+    <Button
+        android:id="@+id/goods_list_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="商品列表"/>
+
 
 
     <TextView

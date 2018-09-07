@@ -52,10 +52,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button btnSellByAgent;
     Button btnPrice;
     Button btnAgentInfo;
+    Button btnGoodsList;
 
     TextView text;
 
-    void initView(){
+    void initView() {
         text = findViewById(R.id.text);
         btnVersion = findViewById(R.id.testversion);
         btnBalance = findViewById(R.id.balance);
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnSellByAgent = findViewById(R.id.sellbyagent);
         btnPrice = findViewById(R.id.price);
         btnAgentInfo = findViewById(R.id.agentinfo);
+        btnGoodsList = findViewById(R.id.goods_list_btn);
 
         btnVersion.setOnClickListener(this);
         btnBalance.setOnClickListener(this);
@@ -76,9 +78,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnSellByAgent.setOnClickListener(this);
         btnPrice.setOnClickListener(this);
         btnAgentInfo.setOnClickListener(this);
+        btnGoodsList.setOnClickListener(this);
     }
 
-    void initData(){
+    void initData() {
         initAccounts();
         ownerToGoods = new HashMap<>();
         ownerToAgent = new HashMap<>();
@@ -128,7 +131,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         Web3jManager.init(this);
-
 
 
 //        new Thread(new Runnable() {
@@ -274,7 +276,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private void MyLog(final String _show){
+    private void MyLog(final String _show) {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -310,9 +312,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.testversion:
-            {
+        switch (v.getId()) {
+            case R.id.testversion: {
                 Web3jManager.getVersion(new Web3jManager.ReqVersionListener() {
                     @Override
                     public void onSuccess(String _version) {
@@ -326,8 +327,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 });
                 break;
             }
-            case R.id.balance:
-            {
+            case R.id.balance: {
                 Web3jManager.getBalance(bank, getBalanceListener);
                 for (String s : user_account) {
                     Web3jManager.getBalance(s, getBalanceListener);
@@ -339,30 +339,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
             }
-            case R.id.deploy:
-            {
+            case R.id.deploy: {
                 Web3jManager.deploy(user_account[0], passwrod, "黑鲨手机", 10,
-                        20, 20, 10, new Web3jManager.ReqDepolyListener(){
+                        20, 20, 10, new Web3jManager.ReqDepolyListener() {
 
-                    @Override
-                    public void onSuccess(String _goodsOwner, String _contractAddr) {
-                        MyLog(_goodsOwner + _contractAddr);
-                    }
+                            @Override
+                            public void onSuccess(String _goodsOwner, String _contractAddr) {
+                                MyLog(_goodsOwner + _contractAddr);
+                            }
 
-                    @Override
-                    public void onError(Exception _e) {
+                            @Override
+                            public void onError(Exception _e) {
 
-                    }
-                });
+                            }
+                        });
                 break;
             }
-            case R.id.signup:
-            {
+            case R.id.signup: {
 //                Web3jManager.createAgent(ownerToGoods.get(user_account[0]), user_account[1], passwrod, 10);
                 break;
             }
-            case R.id.transfer:
-            {
+            case R.id.transfer: {
 //                Web3jManager.sendTransaction(bank, passwrod, user_account[0], 100, sendTransferListener);
 //                Web3jManager.sendTransaction(bank, passwrod, user_account[1], 100, sendTransferListener);
 //                Web3jManager.sendTransaction(bank, passwrod, user_account[2], 100, sendTransferListener);
@@ -372,28 +369,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             }
-            case R.id.sell:
-            {
+            case R.id.sell: {
 //                Web3jManager.buy(ownerToGoods.get(user_account[0]), user_account[3], passwrod, 10);
                 break;
             }
-            case R.id.sellbyagent:
-            {
+            case R.id.sellbyagent: {
 //                Web3jManager.buyByAgent(ownerToGoods.get(user_account[0]), user_account[2], passwrod, 0, 10);
                 break;
             }
-            case R.id.price:
-            {
+            case R.id.price: {
 //                Web3jManager.getGoodsPrice(ownerToGoods.get(user_account[0]) ,user_account[0]);
                 break;
             }
-            case R.id.agentinfo:
-            {
+            case R.id.agentinfo: {
 //                Web3jManager.getAgentInfo(ownerToGoods.get(user_account[0]) ,user_account[0], 0);
                 Intent intent = new Intent(this, MySubscriptionActivity.class);
                 startActivity(intent);
                 break;
             }
+            case R.id.goods_list_btn:
+                Intent intent = new Intent(this, GoodslistActivity.class);
+                startActivity(intent);
+                break;
+            default:
+                break;
         }
     }
 
