@@ -47,6 +47,7 @@ public class Web3jManager {
 
     static String bank;
     static List<String> accountList;
+    static String password = "123";
 
     private static BigDecimal defaultGasPrice = BigDecimal.valueOf(5);
     private static BigInteger unlockDuration = BigInteger.valueOf(60L);
@@ -87,6 +88,8 @@ public class Web3jManager {
 
     public static String getBankAddress(){return bank;}
     public static String getAccount(int _idex){return accountList.get(_idex);}
+    public static String getPassword() {    return password;
+    }
 
     // 测试函数
     public static void getVersion(final ReqVersionListener listener){
