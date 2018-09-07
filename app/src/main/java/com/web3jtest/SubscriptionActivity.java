@@ -54,7 +54,7 @@ public class SubscriptionActivity extends BaseActivity implements View.OnClickLi
         init();
 
         goodsAddr = Web3jManager.getContractList().get(0);
-        userAddr = Web3jManager.getCurUserAddr();
+        userAddr = Web3jManager.getAccount(0);
 
 
         reqGeth();
@@ -127,11 +127,12 @@ public class SubscriptionActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void noticeInfoChange(){
-        rengouzhanbi.setText(  100.0 * singleval / (sumWeight + singleval) + "%");
         float usercurval = curfen * singleval;
-        rengoufenhong.setText(goodsPrice * shineRatio / 100.0 * (usercurval / (sumWeight + usercurval)) + "");
+        rengouzhanbi.setText(  100.0 * usercurval / (sumWeight + usercurval) + "%");
+        float fenhong = (float) (goodsPrice * shineRatio / 100.0);
+        rengoufenhong.setText(fenhong * (usercurval / (sumWeight + usercurval)) + "");
 
-        rengounum.setText(curfen);
+        rengounum.setText(curfen + "");
         rengousum.setText(usercurval + "");
     }
 

@@ -469,7 +469,7 @@ public class Web3jManager {
                              listener.onSuccess(_goodAddr, res.getValue1(),
                                      Integer.parseInt(blanceETH),
                                      res.getValue3().intValue(),res.getValue4().intValue(),
-                                     res.getValue5().intValue(), res.getValue6().intValue(),
+                                      res.getValue6().intValue(),res.getValue5().intValue(),
                                      res.getValue7().intValue(), res.getValue8().intValue(),
                                      res.getValue9().intValue());
                          }

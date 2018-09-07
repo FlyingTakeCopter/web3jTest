@@ -51,14 +51,24 @@ public class GoodsRegisterActivity extends BaseActivity implements View.OnClickL
 
                     @Override
                     public void onSuccess(String _goodsOwner, String _contractAddr) {
-                        Toast.makeText(getApplicationContext(),"注册成功", Toast.LENGTH_LONG).show();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplicationContext(),"部署成功", Toast.LENGTH_LONG).show();
+                            }
+                        });
                         endLoading();
                         finish();
                     }
 
                     @Override
                     public void onError(Exception _e) {
-
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplicationContext(),"部署失败", Toast.LENGTH_LONG).show();
+                            }
+                        });
                     }
                 });
     }
