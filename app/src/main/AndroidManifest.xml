@@ -26,6 +26,8 @@
 
         <activity android:name=".SubscriptionActivity" />
 
+        <activity android:name=".SubscriptionDetailActivity" />
+
         <activity
             android:name=".MySubscriptionActivity"
             android:launchMode="singleTask" />

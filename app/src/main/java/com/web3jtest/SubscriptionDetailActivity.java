@@ -21,6 +21,7 @@ public class SubscriptionDetailActivity extends AppCompatActivity implements Vie
 
     private String goodsAddr;//商品地址
     private String userAddr;//用户地址
+    private String agentid;
 
     private int curfen = 0;
     private int singleval = 0;
@@ -33,6 +34,8 @@ public class SubscriptionDetailActivity extends AppCompatActivity implements Vie
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subscription_detail);
+        userAddr = getIntent().getStringExtra("userAddr");
+        goodsAddr = getIntent().getStringExtra("goodsAddress");
         initView();
         reqGeth();
     }
@@ -107,6 +110,9 @@ public class SubscriptionDetailActivity extends AppCompatActivity implements Vie
                 break;
             case R.id.detail_top_share:  //分享
                 Intent i = new Intent(this, ShareActivity.class);
+                i.putExtra("userAddr", userAddr);
+                i.putExtra("goodsAddress", goodsAddr);
+                i.putExtra("agentid", agentid);
                 startActivity(i);
                 break;
         }
