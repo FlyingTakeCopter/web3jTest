@@ -469,6 +469,7 @@
                 android:layout_height="match_parent"
                 android:background="@color/colorWhite"
                 android:textColor="@color/colorBlack"
+                android:gravity="center"
                 android:text="10"/>
 
             <Button
