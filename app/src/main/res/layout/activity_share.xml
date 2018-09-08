@@ -4,7 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/share">
-
+    <View
+        android:layout_width="320dp"
+        android:layout_height="85dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/info"/>
     <Button
         android:id="@+id/goShopping"
         android:layout_width="match_parent"
@@ -14,6 +19,8 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:background="#FF6400"
+        android:textColor="@color/colorWhite"
+        android:textSize="16sp"
         android:text="去购买"/>
 
 </FrameLayout>
