@@ -26,15 +26,15 @@ public class ShareActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void handleIntent() {
-        userAddr = getIntent().getStringExtra("userAddr");
-        goodsAddr = getIntent().getStringExtra("goodsAddr");
+        userAddr = Web3jManager.getAccount(2);
+        goodsAddr = Web3jManager.getContractList().get(0);
         agentid = getIntent().getIntExtra("agentid", 0);
     }
 
     @Override
     public void onClick(View v) {
         showLoading("购买中",false);
-        Web3jManager.buyByAgent(goodsAddr, Web3jManager.getAccount(0),
+        Web3jManager.buyByAgent(goodsAddr, Web3jManager.getAccount(2),
                 Web3jManager.getPassword(), agentid, 200, new Web3jManager.ReqSellByAgentListener() {
                     @Override
                     public void onSuccess(String _goodAddr, String _buyer, String _blockAddr) {
