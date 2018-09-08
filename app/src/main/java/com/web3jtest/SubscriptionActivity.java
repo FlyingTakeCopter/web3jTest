@@ -54,7 +54,7 @@ public class SubscriptionActivity extends BaseActivity implements View.OnClickLi
         init();
 
         goodsAddr = Web3jManager.getContractList().get(0);
-        userAddr = Web3jManager.getAccount(0);
+        userAddr = Web3jManager.getAccount(1);
 
 
         reqGeth();

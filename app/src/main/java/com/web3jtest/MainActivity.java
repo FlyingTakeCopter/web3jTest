@@ -368,7 +368,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                Web3jManager.sendTransaction(bank, passwrod, user_account[2], 100, sendTransferListener);
 //                Web3jManager.sendTransaction(bank, passwrod, user_account[3], 100, sendTransferListener);
                 for (String s : user_account) {
-                    Web3jManager.sendTransaction(bank, passwrod, s, 1000, sendTransferListener);
+                    Web3jManager.sendTransaction(bank, passwrod, s, 100, sendTransferListener);
                 }
                 break;
             }

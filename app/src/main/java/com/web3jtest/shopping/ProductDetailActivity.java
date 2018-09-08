@@ -26,7 +26,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         showLoading("购买中",false);
-        Web3jManager.buy(Web3jManager.getContractList().get(0), Web3jManager.getAccount(0),
+        Web3jManager.buy(Web3jManager.getContractList().get(0), Web3jManager.getAccount(1),
                 Web3jManager.getPassword(), 200,new Web3jManager.ReqSellListener() {
                     @Override
                     public void onSuccess(String _goodAddr, String _buyer, String _blockAddr) {

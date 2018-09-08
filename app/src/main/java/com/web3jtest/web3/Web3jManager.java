@@ -102,7 +102,7 @@ public class Web3jManager {
         admin = AdminFactory.build(new HttpService());
         loadAccounts();
 
-        contractList.add("0x71820c98a1d0b4ea14732c8bae8950a4b2510c6e");
+        contractList.add("0xa652d74574cb9aecef789dbf596b335da6b2dfd0");
     }
 
     public static void loadAccounts(){

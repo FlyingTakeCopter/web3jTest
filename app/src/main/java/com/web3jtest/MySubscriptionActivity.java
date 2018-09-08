@@ -48,7 +48,7 @@ public class MySubscriptionActivity extends BaseActivity implements View.OnClick
         initView();
 
         goodsAddress = Web3jManager.getContractList().get(0);
-        userAddr = Web3jManager.getAccount(0);
+        userAddr = Web3jManager.getAccount(1);
 
         requestAgentInfo();
     }
@@ -210,7 +210,7 @@ public class MySubscriptionActivity extends BaseActivity implements View.OnClick
             int userweight = goodsBeanList.get(position).get_weight();
             int allweight = goodsBeanList.get(position).getAllweight();
             viewHolder.mGoodsallweight.setText(allweight + "");
-            viewHolder.mrengounum.setText((userweight / allweight * 100.0) + "%");
+            viewHolder.mrengounum.setText((100.0 * userweight / allweight) + "%");
             viewHolder.agentWeight.setText(userweight + "元");
             viewHolder.agentProfit.setText(goodsBeanList.get(position).get_profit() + "");
 
