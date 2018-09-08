@@ -25,15 +25,19 @@ import java.util.List;
  * @author zhaoyu23
  * @date 2018/9/1
  */
-public class MySubscriptionActivity extends AppCompatActivity implements View.OnClickListener {
+public class MySubscriptionActivity extends BaseActivity implements View.OnClickListener {
 
     private ListView mGoodsListView;
     private GoodsAdapter mGoodsAdapter;
     private List<GoodsBean> mGoodsBeanList = new ArrayList<>();
     private GoodsBean goodsBean = new GoodsBean();
     private ImageView mCancelBtn;
-    private List<String> mGoodsAddress;
+    private String goodsAddress;
     private String userAddr;
+    private TextView zongjine;
+    private TextView zongfenhong;
+    int allmoney;
+    int allfenhong;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,7 +45,7 @@ public class MySubscriptionActivity extends AppCompatActivity implements View.On
         setContentView(R.layout.activity_subscription_list);
         initView();
 
-        mGoodsAddress = Web3jManager.getContractList();
+        goodsAddress = Web3jManager.getContractList().get(0);
         userAddr = Web3jManager.getAccount(0);
 
         requestAgentInfo();
@@ -51,76 +55,75 @@ public class MySubscriptionActivity extends AppCompatActivity implements View.On
         mCancelBtn = findViewById(R.id.cancel_btn);
         mGoodsListView = findViewById(R.id.goods_list);
         mCancelBtn.setOnClickListener(this);
+        zongjine = findViewById(R.id.zongjine);
+        zongfenhong = findViewById(R.id.zongshouyi);
     }
 
     private void requestAgentInfo(){
 
-        for (final String s : mGoodsAddress){
-            Web3jManager.getGoodsInfo(s, userAddr, new Web3jManager.ReqGetGoodsInfoListener(){
+        Web3jManager.getGoodsInfo(goodsAddress, userAddr, new Web3jManager.ReqGetGoodsInfoListener(){
 
-                @Override
-                public void onSuccess(String _addr, final String _name,
-                                      final int _price, final int _commRatio, final int _shineRatio, final int _sumAgenter,
-                                      final int _allweight, final int _allShine, final int _allComm, final int _singleval) {
+            @Override
+            public void onSuccess(String _addr, final String _name,
+                                  final int _price, final int _commRatio, final int _shineRatio, final int _sumAgenter,
+                                  final int _allweight, final int _allShine, final int _allComm, final int _singleval) {
 
-                    Web3jManager.getOwnerAgentCount(s, userAddr, new Web3jManager.ReqOwnerAgentCountListener(){
-                        @Override
-                        public void onSuccess(String _addr, int _count) {
-                            for (int i = 0; i < _count; i++){
-                                Web3jManager.getAgentInfoByIdx(s, userAddr, i, new Web3jManager.ReqAgentInfoByIdxListener() {
-                                    @Override
-                                    public void onSuccess(String _addr, int _agentid, String _owner,
-                                                          int _weight, int _createtime, int _profit) {
-                                        goodsBean.setAddr(_addr);
-                                        goodsBean.setName(_name);
-                                        goodsBean.setPrice(_price);
-                                        goodsBean.setCommRatio(_commRatio);
-                                        goodsBean.setShineRatio(_shineRatio);
-                                        goodsBean.setSumAgenter(_sumAgenter);
-                                        goodsBean.setAllweight(_allweight);
-                                        goodsBean.setAllShine(_allShine);
-                                        goodsBean.setAllComm(_allComm);
-                                        goodsBean.setSingleval(_singleval);
-                                        goodsBean.set_agentid(_agentid);
-                                        goodsBean.set_owner(_owner);
-                                        goodsBean.set_weight(_weight);
-                                        goodsBean.set_createtime(_createtime);
-                                        goodsBean.set_profit(_profit);
-                                        mGoodsBeanList.add(goodsBean);
-                                        runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                mGoodsAdapter.notifyDataSetChanged();
-                                            }
-                                        });
-                                    }
+                Web3jManager.getOwnerAgentCount(goodsAddress, userAddr, new Web3jManager.ReqOwnerAgentCountListener(){
+                    @Override
+                    public void onSuccess(String _addr, int _count) {
+                        for (int i = 0; i < _count; i++){
+                            Web3jManager.getAgentInfoByIdx(goodsAddress, userAddr, i, new Web3jManager.ReqAgentInfoByIdxListener() {
+                                @Override
+                                public void onSuccess(String _addr, int _agentid, String _owner,
+                                                      final int _weight, int _createtime, final int _profit) {
+                                    goodsBean.setAddr(_addr);
+                                    goodsBean.setName(_name);
+                                    goodsBean.setPrice(_price);
+                                    goodsBean.setCommRatio(_commRatio);
+                                    goodsBean.setShineRatio(_shineRatio);
+                                    goodsBean.setSumAgenter(_sumAgenter);
+                                    goodsBean.setAllweight(_allweight);
+                                    goodsBean.setAllShine(_allShine);
+                                    goodsBean.setAllComm(_allComm);
+                                    goodsBean.setSingleval(_singleval);
+                                    goodsBean.set_agentid(_agentid);
+                                    goodsBean.set_owner(_owner);
+                                    goodsBean.set_weight(_weight);
+                                    goodsBean.set_createtime(_createtime);
+                                    goodsBean.set_profit(_profit);
+                                    mGoodsBeanList.add(goodsBean);
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            mGoodsAdapter.notifyDataSetChanged();
+                                            allmoney += _weight;
+                                            allfenhong += _profit;
+                                            zongjine.setText(allmoney + "");
+                                            zongfenhong.setText(allfenhong + "");
+                                        }
+                                    });
+                                }
 
-                                    @Override
-                                    public void onError(Exception _e) {
+                                @Override
+                                public void onError(Exception _e) {
 
-                                    }
-                                });
-                            }
+                                }
+                            });
                         }
+                    }
 
-                        @Override
-                        public void onError(Exception _e) {
+                    @Override
+                    public void onError(Exception _e) {
 
-                        }
-                    });
-                }
+                    }
+                });
+            }
 
-                @Override
-                public void onError(Exception _e) {
+            @Override
+            public void onError(Exception _e) {
 
-                }
-            });
-
-
-
-
-
-        }
+            }
+        });
         mGoodsAdapter = new GoodsAdapter(this, mGoodsBeanList);
         mGoodsListView.setAdapter(mGoodsAdapter);
     }
@@ -195,7 +198,7 @@ public class MySubscriptionActivity extends AppCompatActivity implements View.On
             int userweight = goodsBeanList.get(position).get_weight();
             int allweight = goodsBeanList.get(position).getAllweight();
             viewHolder.mGoodsallweight.setText(allweight + "");
-            viewHolder.mrengounum.setText((userweight / allweight * 100.0) + "%");
+            viewHolder.mrengounum.setText((100.0 * userweight / allweight) + "%");
             viewHolder.agentWeight.setText(userweight + "元");
             viewHolder.agentProfit.setText(goodsBeanList.get(position).get_profit() + "");
 

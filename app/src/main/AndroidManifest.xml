@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:name=".MyApplication">
-        <activity android:name=".GoodslistActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,9 +30,9 @@
             android:name=".MySubscriptionActivity"
             android:launchMode="singleTask" />
 
-        <!--<activity-->
-            <!--android:name=".GoodslistActivity"-->
-            <!--android:launchMode="singleTask" />-->
+        <activity
+            android:name=".GoodslistActivity"
+            android:launchMode="singleTask" />
 
         <activity
             android:name=".GoodsRegisterActivity"

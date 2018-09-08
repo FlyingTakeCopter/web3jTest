@@ -101,6 +101,8 @@ public class Web3jManager {
         web3j = Web3jFactory.build(new HttpService());
         admin = AdminFactory.build(new HttpService());
         loadAccounts();
+
+        contractList.add("0x71820c98a1d0b4ea14732c8bae8950a4b2510c6e");
     }
 
     public static void loadAccounts(){
