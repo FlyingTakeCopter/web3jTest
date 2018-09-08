@@ -13,7 +13,6 @@ import com.web3jtest.web3.Web3jManager;
  * 万万没想到，啦啦啦啦啦
  *
  * @author xieyue5
- * @date 2018/9/1
  */
 public class ProductDetailActivity extends BaseActivity implements View.OnClickListener {
     @Override

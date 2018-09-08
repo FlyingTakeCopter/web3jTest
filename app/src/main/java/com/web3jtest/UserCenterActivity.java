@@ -19,7 +19,6 @@ import java.util.List;
 
 /**
  * @author zhaoyu23
- * @date 2018/9/7
  */
 public class UserCenterActivity extends AppCompatActivity implements View.OnClickListener{
 

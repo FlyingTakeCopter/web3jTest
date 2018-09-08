@@ -13,7 +13,6 @@ import com.web3jtest.web3.Web3jManager;
 
 /**
  * @author zhaoyu23
- * @date 2018/9/7
  */
 public class GoodsRegisterActivity extends BaseActivity implements View.OnClickListener {
 

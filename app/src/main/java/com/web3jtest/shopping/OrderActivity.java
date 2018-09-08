@@ -13,7 +13,6 @@ import com.web3jtest.web3.Web3jManager;
 
 /**
  * @author xieyue5
- * @date 2018/9/1
  */
 public class OrderActivity extends BaseActivity implements View.OnClickListener {
 

@@ -43,9 +43,6 @@ import java.util.concurrent.ExecutionException;
 
 import static org.web3j.protocol.http.HttpService.DEFAULT_URL;
 
-/**
- * Created by liuqikang on 2018/8/28.
- */
 
 public class Web3jManager {
     static Web3j web3j;

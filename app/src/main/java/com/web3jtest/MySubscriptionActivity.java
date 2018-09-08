@@ -25,7 +25,6 @@ import java.util.List;
 
 /**
  * @author zhaoyu23
- * @date 2018/9/1
  */
 public class MySubscriptionActivity extends BaseActivity implements View.OnClickListener, ListView.OnItemClickListener {
 

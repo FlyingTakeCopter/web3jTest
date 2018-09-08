@@ -9,7 +9,6 @@ import com.web3jtest.widget.CustomDialogFragment;
 
 /**
  * @author xieyue5
- * @date 2018/9/1
  */
 public class BaseActivity extends AppCompatActivity {
     protected CustomDialogFragment dialog = new CustomDialogFragment();

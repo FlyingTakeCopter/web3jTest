@@ -11,7 +11,6 @@ import com.web3jtest.shopping.ProductDetailActivity;
 
 /**
  * 商品列表页
- *
  * @author zhaoyu23
  */
 public class GoodslistActivity extends AppCompatActivity implements View.OnClickListener {

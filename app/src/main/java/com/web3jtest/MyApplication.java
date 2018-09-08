@@ -6,7 +6,6 @@ import com.web3jtest.web3.Web3jManager;
 
 /**
  * @author xieyue5
- * @date 2018/9/7
  */
 public class MyApplication extends Application {
     @Override

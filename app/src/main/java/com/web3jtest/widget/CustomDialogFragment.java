@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 /**
  * @author xieyue5
- * @date 2018/9/7
  */
 public class CustomDialogFragment extends DialogFragment {
 

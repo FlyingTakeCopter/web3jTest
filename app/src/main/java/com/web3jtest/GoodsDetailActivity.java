@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 
 /**
  * @author zhaoyu23
- * @date 2018/9/7
  */
 public class GoodsDetailActivity extends AppCompatActivity {
 

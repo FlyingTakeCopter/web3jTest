@@ -10,7 +10,6 @@ import com.web3jtest.base.BaseActivity;
 
 /**
  * @author xieyue5
- * @date 2018/9/1
  */
 public class ProductListActivity extends BaseActivity implements View.OnClickListener {
 
