@@ -1,5 +1,6 @@
 package com.web3jtest;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -164,6 +165,9 @@ public class SubscriptionActivity extends BaseActivity implements View.OnClickLi
                             }
                         });
                         endLoading();
+                        Intent intent = new Intent(SubscriptionActivity.this, SubscriptionDetailActivity.class);
+                        intent.putExtra("rengounum", curfen * singleval);
+                        startActivity(intent);
                     }
 
                     @Override

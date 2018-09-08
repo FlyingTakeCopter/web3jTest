@@ -11,6 +11,8 @@ import com.web3jtest.web3.Web3jManager;
 
 import org.w3c.dom.Text;
 
+import java.util.Locale;
+
 /**
  * 认购页面
  */
@@ -30,12 +32,16 @@ public class SubscriptionDetailActivity extends AppCompatActivity implements Vie
     private float commRatio = 0;
     private float goodsPrice = 0;
 
+    private float rengounum = 0;
+    private float fenhongnum = 0;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subscription_detail);
-        userAddr = getIntent().getStringExtra("userAddr");
-        goodsAddr = getIntent().getStringExtra("goodsAddress");
+        userAddr = Web3jManager.getAccount(1);
+        goodsAddr = Web3jManager.getContractList().get(0);
+        rengounum = getIntent().getIntExtra("rengounum",0);
+        fenhongnum = getIntent().getFloatExtra("fenhongnum",0.0f);
         initView();
         reqGeth();
     }
@@ -44,7 +50,6 @@ public class SubscriptionDetailActivity extends AppCompatActivity implements Vie
         topTitle = findViewById(R.id.detail_top_title);
         topValue1 = findViewById(R.id.detail_top_value1);
         topValue2 = findViewById(R.id.detail_top_value2);
-        topValue3 = findViewById(R.id.detail_top_value3);
         line1 = findViewById(R.id.detail_content_line1);
         line2 = findViewById(R.id.detail_content_line2);
         line3 = findViewById(R.id.detail_content_line3);
@@ -73,9 +78,8 @@ public class SubscriptionDetailActivity extends AppCompatActivity implements Vie
                 commRatio = _commRatio;
                 goodsPrice = _price;
 
-                topValue1.setText(_allweight + "");
-                topValue2.setText(_allShine + "");
-                topValue3.setText(_allComm + "");
+                topValue1.setText(String.format(Locale.getDefault(), "%.02f", rengounum));
+                topValue2.setText(String.format(Locale.getDefault(), "%.02f", fenhongnum));
                 line1.setText(_addr);
                 line2.setText(_shineRatio + "%");
                 line3.setText(_price * _shineRatio / 100.0 + "");
@@ -83,8 +87,9 @@ public class SubscriptionDetailActivity extends AppCompatActivity implements Vie
                 line5.setText(_price * _commRatio / 100.0 + "");
                 line6.setText(_sumAgenter + "");
                 line7.setText(_singleval + "");
-                line8.setText( _allweight == 0 ? "100%" : ( 100.0 * _singleval / (_allweight + _singleval) + "%"));
-                line9.setText(_price * _shineRatio / 100.0 * (_singleval / (_allweight + _singleval)) + "");
+                line8.setText( _allweight == 0 ? "100%" : ( 100.0 * rengounum / _allweight + "%"));
+                line9.setText(String.format(Locale.getDefault(), "%.02f",
+                        _price * _shineRatio / 100.0 * (rengounum / _allweight)));
 
                 curfen = 1;
                 singleval = _singleval;

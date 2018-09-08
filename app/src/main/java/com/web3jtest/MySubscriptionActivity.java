@@ -22,6 +22,7 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author zhaoyu23
@@ -31,14 +32,13 @@ public class MySubscriptionActivity extends BaseActivity implements View.OnClick
     private ListView mGoodsListView;
     private GoodsAdapter mGoodsAdapter;
     private List<GoodsBean> mGoodsBeanList = new ArrayList<>();
-    private GoodsBean goodsBean = new GoodsBean();
     private ImageView mCancelBtn;
     private String goodsAddress;
     private String userAddr;
     private TextView zongjine;
     private TextView zongfenhong;
-    int allmoney;
-    int allfenhong;
+    float allmoney;
+    float allfenhong;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,6 +78,7 @@ public class MySubscriptionActivity extends BaseActivity implements View.OnClick
                                 @Override
                                 public void onSuccess(String _addr, int _agentid, String _owner,
                                                       final int _weight, int _createtime, final float _profit) {
+                                    GoodsBean goodsBean = new GoodsBean();
                                     goodsBean.setAddr(_addr);
                                     goodsBean.setName(_name);
                                     goodsBean.setPrice(_price);
@@ -100,8 +101,8 @@ public class MySubscriptionActivity extends BaseActivity implements View.OnClick
                                             mGoodsAdapter.notifyDataSetChanged();
                                             allmoney += _weight;
                                             allfenhong += _profit;
-                                            zongjine.setText(allmoney + "");
-                                            zongfenhong.setText(allfenhong + "");
+                                            zongjine.setText(String.format(Locale.getDefault(),"%.02f",allmoney));
+                                            zongfenhong.setText(String.format(Locale.getDefault(),"%.02f",allfenhong));
                                         }
                                     });
                                 }
@@ -146,7 +147,9 @@ public class MySubscriptionActivity extends BaseActivity implements View.OnClick
         Intent i = new Intent(this, SubscriptionDetailActivity.class);
         i.putExtra("userAddr", userAddr);
         i.putExtra("goodsAddress", goodsAddress);
-        i.putExtra("agentid",  goodsBean.get_agentid());
+        i.putExtra("agentid",  mGoodsBeanList.get(position).get_agentid());
+        i.putExtra("rengounum", mGoodsBeanList.get(position).get_weight());
+        i.putExtra("fenhongnum", mGoodsBeanList.get(position).get_profit());
         startActivity(i);
     }
 
