@@ -77,7 +77,7 @@ public class MySubscriptionActivity extends BaseActivity implements View.OnClick
                             Web3jManager.getAgentInfoByIdx(goodsAddress, userAddr, i, new Web3jManager.ReqAgentInfoByIdxListener() {
                                 @Override
                                 public void onSuccess(String _addr, int _agentid, String _owner,
-                                                      final int _weight, int _createtime, final int _profit) {
+                                                      final int _weight, int _createtime, final float _profit) {
                                     goodsBean.setAddr(_addr);
                                     goodsBean.setName(_name);
                                     goodsBean.setPrice(_price);

@@ -21,7 +21,7 @@ public class GoodsBean {
     String _owner;
     int _weight;
     int _createtime;
-    int _profit;
+    float _profit;
 
     public int get_agentid() {
         return _agentid;
@@ -39,7 +39,7 @@ public class GoodsBean {
         return _createtime;
     }
 
-    public int get_profit() {
+    public float get_profit() {
         return _profit;
     }
     public void set_agentid(int _agentid) {
@@ -58,7 +58,7 @@ public class GoodsBean {
         this._createtime = _createtime;
     }
 
-    public void set_profit(int _profit) {
+    public void set_profit(float _profit) {
         this._profit = _profit;
     }
     public String getAddr() {

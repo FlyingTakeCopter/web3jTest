@@ -444,7 +444,7 @@ public class Web3jManager {
                     String blanceETH = Convert.fromWei(res.getValue5().toString(), Convert.Unit.ETHER).toString();
 
                     listener.onSuccess(_goodAddr, res.getValue1().intValue(), res.getValue2(),
-                            res.getValue3().intValue(), res.getValue4().intValue(), Integer.parseInt(blanceETH));
+                            res.getValue3().intValue(), res.getValue4().intValue(), Float.parseFloat(blanceETH));
                 } catch (Exception e) {
                     listener.onError(e);
                 }
@@ -598,7 +598,7 @@ public class Web3jManager {
 
     // 获取代理Info
     public interface ReqAgentInfoByIdxListener extends Web3jReqListener{
-        void onSuccess(String _addr, int _agentid,String _owner, int _weight, int _createtime, int _profit);
+        void onSuccess(String _addr, int _agentid,String _owner, int _weight, int _createtime, float _profit);
     }
 
     // 获取商品信息
