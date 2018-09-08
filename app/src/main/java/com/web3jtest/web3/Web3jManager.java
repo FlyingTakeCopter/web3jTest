@@ -443,8 +443,11 @@ public class Web3jManager {
                             Contract.GAS_PRICE, Contract.GAS_LIMIT);
                     Tuple5<BigInteger, String, BigInteger, BigInteger, BigInteger> res =
                             contract.getOwnerAgentInfo(BigInteger.valueOf(_agentidx)).send();
+                    //格式转化 wei-ether
+                    String blanceETH = Convert.fromWei(res.getValue5().toString(), Convert.Unit.ETHER).toString();
+
                     listener.onSuccess(_goodAddr, res.getValue1().intValue(), res.getValue2(),
-                            res.getValue3().intValue(), res.getValue4().intValue(), res.getValue5().intValue());
+                            res.getValue3().intValue(), res.getValue4().intValue(), Integer.parseInt(blanceETH));
                 } catch (Exception e) {
                     listener.onError(e);
                 }
@@ -466,6 +469,7 @@ public class Web3jManager {
                             contract.getGoodsInfo().send();
                     //格式转化 wei-ether
                     final String blanceETH = Convert.fromWei(res.getValue2().toString(), Convert.Unit.ETHER).toString();
+                    final String allfenhong = Convert.fromWei(res.getValue7().toString(), Convert.Unit.ETHER).toString();
 
                     new Handler(Looper.getMainLooper()).post(new Runnable() {
                          @Override
@@ -474,7 +478,7 @@ public class Web3jManager {
                                      Integer.parseInt(blanceETH),
                                      res.getValue3().intValue(),res.getValue4().intValue(),
                                       res.getValue6().intValue(),res.getValue5().intValue(),
-                                     res.getValue7().intValue(), res.getValue8().intValue(),
+                                     Integer.parseInt(allfenhong), res.getValue8().intValue(),
                                      res.getValue9().intValue());
                          }
                      });
