@@ -1,12 +1,14 @@
 package com.web3jtest;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -25,7 +27,7 @@ import java.util.List;
  * @author zhaoyu23
  * @date 2018/9/1
  */
-public class MySubscriptionActivity extends BaseActivity implements View.OnClickListener {
+public class MySubscriptionActivity extends BaseActivity implements View.OnClickListener, ListView.OnItemClickListener {
 
     private ListView mGoodsListView;
     private GoodsAdapter mGoodsAdapter;
@@ -54,6 +56,7 @@ public class MySubscriptionActivity extends BaseActivity implements View.OnClick
     private void initView() {
         mCancelBtn = findViewById(R.id.cancel_btn);
         mGoodsListView = findViewById(R.id.goods_list);
+        mGoodsListView.setOnItemClickListener(this);
         mCancelBtn.setOnClickListener(this);
         zongjine = findViewById(R.id.zongjine);
         zongfenhong = findViewById(R.id.zongshouyi);
@@ -139,6 +142,15 @@ public class MySubscriptionActivity extends BaseActivity implements View.OnClick
         }
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent i = new Intent(this, SubscriptionDetailActivity.class);
+        i.putExtra("userAddr", userAddr);
+        i.putExtra("goodsAddress", goodsAddress);
+        i.putExtra("agentid",  goodsBean.get_agentid());
+        startActivity(i);
+    }
+
     private class GoodsAdapter extends BaseAdapter {
 
         /**
@@ -198,7 +210,7 @@ public class MySubscriptionActivity extends BaseActivity implements View.OnClick
             int userweight = goodsBeanList.get(position).get_weight();
             int allweight = goodsBeanList.get(position).getAllweight();
             viewHolder.mGoodsallweight.setText(allweight + "");
-            viewHolder.mrengounum.setText((100.0 * userweight / allweight) + "%");
+            viewHolder.mrengounum.setText((userweight / allweight * 100.0) + "%");
             viewHolder.agentWeight.setText(userweight + "元");
             viewHolder.agentProfit.setText(goodsBeanList.get(position).get_profit() + "");
 
